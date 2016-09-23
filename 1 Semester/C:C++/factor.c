@@ -66,18 +66,10 @@ u_long *trivialFactor(u_long target)
     return result;
 }
 
-u_long *nonTrivialFactor(u_long target)
-{
-    return NULL;
-}
-
 u_long *factor(u_long target)
 {
     u_long *result = NULL;
-    if (target <= TRIVIAL)
-        result = trivialFactor(target);
-    else
-        result = nonTrivialFactor(target);
+    result = trivialFactor(target);
     return result;
 }
 
@@ -86,18 +78,19 @@ void print(u_long *array)
     size_t i = 0;
     while (array[i] != 0)
         printf("%ld ", array[i++]);
-    printf("%ld\n", array[i]);
+    printf("\n");
 }
 
 int main()
 {
     u_long target;
     scanf("%ld", &target);
-    u_long *result = factor(target);
-    if (result != NULL) {
-        print(result);
-        printf("%ld %ld\n", target, LONG_MAX);
-        myFree(result);
+    if (target <= LONG_MAX) {
+        u_long *result = factor(target);
+        if (result != NULL) {
+            print(result);
+            myFree(result);
+        }
     }
     return 0;
 }
