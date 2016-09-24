@@ -103,6 +103,9 @@ int main()
       printf("[error]\n");
       return 0;
     }
+  } else {
+    printf("[error]\n");
+    return 0;
   }
   return 0;
 }
