@@ -38,7 +38,7 @@ u_long *trivialFactor(u_long target)
   if (target == 1) {
     result = myCalloc(2);
     result[1] = 0;
-    return NULL;
+    return result;
   } else {
     u_long *tmp = myCalloc(MAX_SIZE);
     size_t i = 1;
@@ -89,6 +89,7 @@ int main()
   char string[MAX_SIZE];
   if (scanf("%s", string) == 1 && check(string) == true) {
     u_long target = atoi(string);
+    printf("%llu %s\n", target, string);
     if (target > 0 && target <= LONG_MAX) {
       u_long *result = factor(target);
       if (result != NULL) {
