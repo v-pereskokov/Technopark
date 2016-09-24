@@ -14,7 +14,8 @@ u_long *myCalloc(size_t size)
     printf("[error]\n");
     return NULL;
   }
-  memset(array, 1, 1);
+  for (size_t i = 0; i < size; ++i)
+    array[i] = 1;
   return array;
 }
 
@@ -26,8 +27,7 @@ void myFree(u_long *array)
 
 void transport(u_long *lhs, const u_long *rhs, const size_t size)
 {
-  memcpy(lhs, rhs, size * sizeof(u_long));
-  lhs[size - 1] = 0;
+  memcpy(lhs, rhs, size * sizeof(*lhs));
 }
 
 u_long *trivialFactor(u_long target)
@@ -52,9 +52,8 @@ u_long *trivialFactor(u_long target)
     if (tmp[i] != 1)
       ++i;
     tmp[i] = 0;
-    size_t size = i + 1;
-    result = myCalloc(size);
-    transport(result, tmp, size);
+    result = myCalloc(i + 1);
+    transport(result, tmp, i + 1);
     myFree(tmp);
   }
   return result;
