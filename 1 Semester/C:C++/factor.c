@@ -41,7 +41,7 @@ u_long *trivialFactor(u_long target)
   if (target == 1) {
     result = myCalloc(2);
     result[1] = 0;
-    return NULL;
+    return result;
   } else {
     u_long *tmp = myCalloc(MAX_SIZE);
     size_t i = 1;
@@ -82,13 +82,20 @@ void print(u_long *array)
 int main()
 {
   u_long target;
-  if (scanf("%ld", &target) == 1 && target > 0 && target <= TRIVIAL) {
-    u_long *result = factor(target);
-    if (result != NULL) {
-      print(result);
-      myFree(result);
+  for (size_t i = 0; i < 12000; ++i) {
+    if (scanf("%ld", &target) == 1 && target > 0 && target <= LONG_MAX) {
+      u_long *result = factor(target);
+      if (result != NULL) {
+        print(result);
+        myFree(result);
+      } else {
+        printf("[error]\n");
+        return 0;
+      }
+    } else {
+      printf("[error]\n");
+      return 0;
     }
-  } else
-    printf("[error]\n");
+  }
   return 0;
 }
