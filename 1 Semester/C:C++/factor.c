@@ -88,9 +88,8 @@ int main()
 {
   char string[MAX_SIZE];
   if (scanf("%s", string) == 1 && check(string) == true) {
-    u_long target = atoi(string);
-    printf("%llu %s\n", target, string);
-    if (target > 0 && target <= LONG_MAX) {
+    u_long target = atol(string);
+    if (target > 0 && target <= LLONG_MAX) {
       u_long *result = factor(target);
       if (result != NULL) {
         print(result);
