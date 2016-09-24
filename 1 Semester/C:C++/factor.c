@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <ctype.h>
 
+typedef enum { false, true } bool;
 typedef unsigned long long u_long;
 
 const int MAX_SIZE = 65;
@@ -72,21 +74,35 @@ void print(u_long *array)
   printf("\n");
 }
 
+bool check(const char *target)
+{
+  size_t i = 0;
+  while (target[i] != '\0') {
+    if (!isdigit(target[i++]))
+      return false;
+  }
+  return true;
+}
+
 int main()
 {
-  u_long target;
-  if (scanf("%llu", &target) == 1 && target > 0 && target <= LONG_MAX) {
-    u_long *result = factor(target);
-    if (result != NULL) {
-      print(result);
-      myFree(result);
+  char string[MAX_SIZE];
+  if (scanf("%s", string) == 1 && check(string) == true) {
+    u_long target = atoi(string);
+    if (target > 0 && target <= LONG_MAX) {
+      u_long *result = factor(target);
+      if (result != NULL) {
+        print(result);
+        
+        myFree(result);
+      } else {
+        printf("[error]\n");
+        return 0;
+      }
     } else {
       printf("[error]\n");
       return 0;
     }
-  } else {
-    printf("[error]\n");
-    return 0;
   }
   return 0;
 }
