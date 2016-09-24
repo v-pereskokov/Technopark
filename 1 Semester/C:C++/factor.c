@@ -6,7 +6,6 @@ typedef enum { false, true } bool;
 typedef unsigned long u_long;
 
 const int MAX_SIZE = 65;
-const int MAX_SIZE_TRIV = 19;
 const int TRIVIAL = 600000;
 
 u_long *myCalloc(size_t size)
@@ -45,7 +44,7 @@ u_long *trivialFactor(u_long target)
         result[1] = 0;
         return NULL;
     } else {
-        u_long *tmp = myCalloc(MAX_SIZE_TRIV);
+        u_long *tmp = myCalloc(MAX_SIZE);
         size_t i = 1;
         for (size_t j = 2; j * j <= target; ++j) {
             while (target % j == 0) {
@@ -91,6 +90,7 @@ int main()
             print(result);
             myFree(result);
         }
-    }
+    } else
+        printf("[error]\n");
     return 0;
 }
