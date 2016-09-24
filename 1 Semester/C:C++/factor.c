@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <limits.h>
 
-typedef unsigned long u_long;
+typedef unsigned long long u_long;
 
 const int MAX_SIZE = 65;
-const int TRIVIAL = 10000000;
 
 u_long *myCalloc(size_t size)
 {
@@ -41,7 +40,7 @@ u_long *trivialFactor(u_long target)
   if (target == 1) {
     result = myCalloc(2);
     result[1] = 0;
-    return result;
+    return NULL;
   } else {
     u_long *tmp = myCalloc(MAX_SIZE);
     size_t i = 1;
@@ -75,27 +74,25 @@ void print(u_long *array)
 {
   size_t i = 0;
   while (array[i] != 0)
-    printf("%ld ", array[i++]);
+    printf("%llu ", array[i++]);
   printf("\n");
 }
 
 int main()
 {
   u_long target;
-  for (size_t i = 0; i < 12000; ++i) {
-    if (scanf("%ld", &target) == 1 && target > 0 && target <= LONG_MAX) {
-      u_long *result = factor(target);
-      if (result != NULL) {
-        print(result);
-        myFree(result);
-      } else {
-        printf("[error]\n");
-        return 0;
-      }
+  if (scanf("%llu", &target) == 1 && target > 0 && target <= TRIVIAL) {
+    u_long *result = factor(target);
+    if (result != NULL) {
+      print(result);
+      myFree(result);
     } else {
       printf("[error]\n");
       return 0;
     }
+  } else {
+    printf("[error]\n");
+    return 0;
   }
   return 0;
 }
