@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 
 typedef unsigned long long u_long;
@@ -13,8 +14,7 @@ u_long *myCalloc(size_t size)
     printf("[error]\n");
     return NULL;
   }
-  for (size_t i = 0; i < size; ++i)
-    array[i] = 1;
+  memset(array, 1, 1);
   return array;
 }
 
@@ -24,14 +24,10 @@ void myFree(u_long *array)
     free(array);
 }
 
-void transport(u_long *lhs, const u_long *rhs)
+void transport(u_long *lhs, const u_long *rhs, const size_t size)
 {
-  size_t i = 0;
-  while (rhs[i] != 0) {
-    lhs[i] = rhs[i];
-    ++i;
-  }
-  lhs[i] = 0;
+  memcpy(lhs, rhs, size * sizeof(u_long));
+  lhs[size - 1] = 0;
 }
 
 u_long *trivialFactor(u_long target)
@@ -56,8 +52,9 @@ u_long *trivialFactor(u_long target)
     if (tmp[i] != 1)
       ++i;
     tmp[i] = 0;
-    result = myCalloc(i + 1);
-    transport(result, tmp);
+    size_t size = i + 1;
+    result = myCalloc(size);
+    transport(result, tmp, size);
     myFree(tmp);
   }
   return result;
@@ -65,9 +62,7 @@ u_long *trivialFactor(u_long target)
 
 u_long *factor(u_long target)
 {
-  u_long *result = NULL;
-  result = trivialFactor(target);
-  return result;
+  return trivialFactor(target);
 }
 
 void print(u_long *array)
@@ -81,7 +76,7 @@ void print(u_long *array)
 int main()
 {
   u_long target;
-  if (scanf("%llu", &target) == 1 && target > 0 && target <= TRIVIAL) {
+  if (scanf("%llu", &target) == 1 && target > 0 && target <= LONG_MAX) {
     u_long *result = factor(target);
     if (result != NULL) {
       print(result);
