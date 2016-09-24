@@ -93,7 +93,6 @@ int main()
       u_long *result = factor(target);
       if (result != NULL) {
         print(result);
-        
         myFree(result);
       } else {
         printf("[error]\n");
