@@ -9,9 +9,9 @@ int BinarySearch(std::vector<int> *vector, int element) {
   int first = 0;
   int count = vector->size();
   int last = count;
-  while(first < last) {
+  while (first < last) {
     int mid = first + ((last - first) >> 1);
-    if(element <= (*vector)[mid])
+    if (element <= (*vector)[mid])
       last = mid;
     else
       first = mid + 1;
