@@ -45,7 +45,7 @@ int main() {
   u_int n;
   scanf("%d", &n);
   if (n > 0 && n <= 1000000) {
-    Queue q(10);
+    Queue q(n);
     int cmd;
     int element;
     bool flag = true;
