@@ -9,9 +9,9 @@ int BinarySearch(std::vector<int> *vector, int element) {
   int first = 0;
   int count = vector->size();
   int last = count;
-  while (first < last) {
+  while(first < last) {
     int mid = first + ((last - first) >> 1);
-    if (element <= (*vector)[mid])
+    if(element <= (*vector)[mid])
       last = mid;
     else
       first = mid + 1;
@@ -37,11 +37,13 @@ int main() {
   if (n > 0 && m > 0 && n <= 10000 && m <= 10000 && n > m) {
     int element;
     std::vector<int> A;
-    for (std::size_t i = 1; i <= n && scanf("%d", &element); ++i) {
+    for (std::size_t i = 1; i <= n; ++i) {
+      scanf("%d", &element);
       A.push_back(element);
     }
     std::vector<int> B;
-    for (std::size_t i = 1; i <= m && scanf("%d", &element); ++i) {
+    for (std::size_t i = 1; i <= m; ++i) {
+      scanf("%d", &element);
       B.push_back(element);
     }
     if (search(&A, &B)) {
