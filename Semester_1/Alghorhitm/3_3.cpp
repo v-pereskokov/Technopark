@@ -5,28 +5,27 @@
 
 using u_int = unsigned int;
 
-int BinarySearch(std::vector<int> *vector, int element) {
-  int first = 0;
-  int count = vector->size();
-  int last = count;
-  while(first < last) {
-    int mid = first + ((last - first) >> 1);
-    if(element <= (*vector)[mid])
+template <class IT>
+int BinarySearch(IT begin, IT end, int element) {
+  IT first = begin;
+  IT last = end;
+  --last;
+  while (first < last) {
+    IT mid = first + ((last - first) / 2);
+    if (element <= *mid)
       last = mid;
     else
       first = mid + 1;
   }
-  return (first == count || (*vector)[first] != element ) ? -1 : first;
+  return (first == end || *first != element ) ? -1 : *first;
 }
 
 bool search(std::vector<int> *A, std::vector<int> *B) {
-  int index = 0;
   for (std::size_t i = 0; i < B->size(); ++i) {
-    bool flag = true;
-    if (BinarySearch(A, (*B)[i]) == -1)
-      flag = false;
-    if (!flag)
-      return flag;
+    int index = 0;
+    index = BinarySearch(A->begin() + index, A->end(), (*B)[i]);
+    if (index == -1)
+      return false;
   }
   return true;
 }
