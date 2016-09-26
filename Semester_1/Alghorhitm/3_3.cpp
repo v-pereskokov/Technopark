@@ -6,7 +6,7 @@
 using u_int = unsigned int;
 
 template <class IT>
-int BinarySearch(IT begin, IT end, int element) {
+IT BinarySearch(IT begin, IT end, int element) {
   IT first = begin;
   IT last = end;
   --last;
@@ -17,14 +17,16 @@ int BinarySearch(IT begin, IT end, int element) {
     else
       first = mid + 1;
   }
-  return (first == end || *first != element ) ? -1 : *first;
+  return (first == end || *first != element ) ? end : first;
 }
 
 bool search(std::vector<int> *A, std::vector<int> *B) {
-  for (std::size_t i = 0; i < B->size(); ++i) {
-    int index = 0;
-    index = BinarySearch(A->begin() + index, A->end(), (*B)[i]);
-    if (index == -1)
+  auto begin_A = A->begin();
+  auto end_A = A->end();
+  auto index = begin_A;
+  for (auto it = B->begin(); it < B->end(); ++it) {
+    index = BinarySearch(index, end_A, (*it));
+    if (index == end_A)
       return false;
   }
   return true;
@@ -53,4 +55,3 @@ int main() {
   }
   return 0;
 }
-
