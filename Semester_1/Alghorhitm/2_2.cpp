@@ -1,40 +1,35 @@
-#include <iostream>
+#include <cstdio>
 #include <vector>
 #include <cmath>
 
 using u_int = unsigned int;
 using coord = double;
 
-class Point
-{
-public:
+class Point {
+ public:
   Point(const coord x, const coord y)
   : _x(x), _y(y) {}
-  
   Point(const Point& rhs)
   : _x(rhs._x), _y(rhs._y) {}
   coord setX() {
     return _x;
   }
-  
   coord setY() {
     return _y;
   }
-  
-private:
+ private:
   coord _x;
   coord _y;
 };
 
-int main()
-{
+int main() {
   u_int N;
-  std::cin >> N;
+  scanf("%d", &N);
   if (N < 1000) {
     std::vector<Point> points;
     coord x, y;
     for (std::size_t i = 0; i < N; ++i) {
-      std::cin >> x >> y;
+      scanf("%lf %lf", &x, &y);
       if (x < 10000 && y < 10000)
         points.push_back(Point(x, y));
     }
@@ -46,7 +41,7 @@ int main()
       sum_y += points[i].setY() * points[i + 1].setX();
     }
     double square = std::abs((sum_x - sum_y) / 2);
-    std::cout << square << std::endl;
+    printf("%.1f\n", square);
   }
   return 0;
 }
