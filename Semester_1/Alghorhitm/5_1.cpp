@@ -27,12 +27,17 @@ bool isOpen(const char bracket) {
 }
 
 bool otherSide_(const char lhs, const char rhs) {
-  
+
   return !isOpen(lhs) && isOpen(rhs);
 }
 
 bool oneSide(const char lhs, const char rhs) {
-  return isOpen(lhs) && isOpen(rhs);
+  if (isOpen(lhs) && isOpen(rhs)) {
+    return true;
+  } else if (!isOpen(lhs) && !isOpen(rhs)) {
+    return true;
+  }
+  return false;
 }
 
 char inverseBracket(const char bracket) {
@@ -58,6 +63,10 @@ std::string bracket(std::string *target) {
   std::stack<char> brackets;
   for (std::size_t i = 0; i < (*target).size(); ++i) {
     char bracket = (*target)[i];
+    if ((bracket == '\\' && (*target)[i + 1] == 'n')) {
+      ++i;
+      continue;
+    }
     if (isBracket(bracket)) {
       if (brackets.size() > 0) {
         char topBracket = brackets.top();
@@ -92,7 +101,9 @@ std::string bracket(std::string *target) {
 int main() {
   std::string target;
   std::cin >> target;
-  std::string result = bracket(&target);
-  std::cout << result << std::endl;
+  if (target.size() <= 200000) {
+    std::string result = bracket(&target);
+    std::cout << result << std::endl;
+  }
   return 0;
 }
