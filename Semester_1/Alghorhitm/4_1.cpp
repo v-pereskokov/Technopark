@@ -29,7 +29,7 @@ Queue::~Queue() {
 }
 
 void Queue::push(int element) {
-  if ((_head - _tail + _size) % _size != 1)
+  if ((_head - _tail + _size) % _size == 1)
     grow();
   _buffer[_tail++] = element;
   if (_tail == _size)
