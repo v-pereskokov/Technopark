@@ -1,16 +1,20 @@
 #include <cstdio>
 #include <cassert>
 
+#define methods
+
 using u_int = unsigned int;
 
 class Queue {
- public:
+public:
   explicit Queue(int size);
   ~Queue();
   void push(int element);
   int pop();
   bool isEmpty() const;
- private:
+private methods:
+  void grow();
+private:
   int *_buffer;
   int _size;
   int _head;
@@ -25,7 +29,8 @@ Queue::~Queue() {
 }
 
 void Queue::push(int element) {
-  assert((_head - _tail + _size) % _size != 1);
+  if ((_head - _tail + _size) % _size != 1)
+    grow();
   _buffer[_tail++] = element;
   if (_tail == _size)
     _tail = 0;
@@ -39,6 +44,16 @@ int Queue::pop() {
     return result;
   }
   return -1;
+}
+
+void Queue::grow() {
+  int newSize = _size * 2;
+  int* newBuffer = new int[newSize];
+  for(std::size_t i = 0; i < _size; ++i)
+    newBuffer[i] = _buffer[i];
+  delete[] _buffer;
+  _buffer = newBuffer;
+  _size = newSize;
 }
 
 int main() {
