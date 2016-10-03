@@ -2,9 +2,6 @@
 #include <cassert>
 #include <string>
 
-#define methods
-#define parametres
-
 template <class T>
 class Stack {
 public:
@@ -145,7 +142,7 @@ int main() {
   while (std::cin >> target) {
     result += target;
   }
-  if (result.size() > 0 && result.size() <= 200000) {
+  if (result.size() <= 200000) {
     result = bracket(&result);
     std::cout << result << std::endl;
   } else {
