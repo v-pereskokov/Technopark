@@ -1,6 +1,50 @@
 #include <iostream>
-#include <stack>
+#include <cassert>
 #include <string>
+
+#define methods
+#define parametres
+
+template <class T>
+class Stack {
+public:
+  explicit Stack(const int size)
+  :_size(size), _top(-1) {
+    _buffer = new T[_size];
+  }
+  
+  ~Stack() {
+    delete [] _buffer;
+  }
+  
+  void push(const T value) {
+    assert(_top + 1 < _size);
+    _buffer[++_top] = value;
+  }
+  
+  void pop() {
+    assert(_top != -1);
+    _buffer[_top--];
+  }
+  
+  T top() const {
+    assert(_top != -1);
+    return _buffer[_top];
+  }
+  
+  bool isEmpty() const {
+    return _top == -1;
+  }
+  
+  int size() const {
+    return _top;
+  }
+  
+private:
+  T *_buffer;
+  int _size;
+  int _top;
+};
 
 bool isBracket(const char bracket) {
   switch (bracket) {
@@ -60,11 +104,11 @@ char inverseBracket(const char bracket) {
 }
 
 std::string bracket(std::string *target) {
-  std::stack<char> brackets;
-  for (std::size_t i = 0; i < (*target).size(); ++i) {
+  Stack<char> brackets(target->size());
+  for (std::size_t i = 0; i < target->size(); ++i) {
     char bracket = (*target)[i];
     if (isBracket(bracket)) {
-      if (brackets.size() > 0) {
+      if (brackets.size() > -1) {
         char topBracket = brackets.top();
         if (isClosed(topBracket, bracket)) {
           brackets.pop();
@@ -81,7 +125,7 @@ std::string bracket(std::string *target) {
     }
   }
   std::string before = "";
-  while (brackets.size() > 0) {
+  while (brackets.size() > -1) {
     char bracket = brackets.top();
     if (isOpen(bracket)) {
       *target += inverseBracket(bracket);
@@ -96,9 +140,13 @@ std::string bracket(std::string *target) {
 
 int main() {
   std::string target;
-  std::cin >> target;
-  if (target.size() <= 200000) {
-    std::string result = bracket(&target);
+  std::string result = "";
+  int i = 0;
+  while (std::cin >> target) {
+    result += target;
+  }
+  if (result.size() > 0 && result.size() <= 200000) {
+    result = bracket(&result);
     std::cout << result << std::endl;
   } else {
     std::cout << "IMPOSSIBLE" << std::endl;
