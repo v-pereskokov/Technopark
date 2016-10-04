@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <vector>
 
@@ -22,18 +23,15 @@ int maxPyramid(const std::vector<Athlete> &athletes) {
 }
 
 int main() {
-  int n;
-  scanf("%d", &n);
-  if (n > 0 && n <= 100000) {
-    std::vector<Athlete> athletes;
-    int weight;
-    int power;
-    for (size_t i = 0; i < n; ++i) {
-      scanf("%d %d", &weight, &power);
-      athletes.push_back(Athlete(weight, power));
-      std::sort(athletes.begin(), athletes.end(), [](Athlete lhs, Athlete rhs){ return lhs._power < rhs._power; });
-    }
-    printf("%d\n", maxPyramid(athletes));
+  std::vector<Athlete> athletes;
+  int weight;
+  int power;
+  size_t n = 0;
+  while (scanf("%d %d", &weight, &power) || n <= 100000) {
+    athletes.push_back(Athlete(weight, power));
+    ++n;
   }
+  std::sort(athletes.begin(), athletes.end(), [](Athlete lhs, Athlete rhs){ return lhs._power < rhs._power; });
+  printf("%d\n", maxPyramid(athletes));
   return 0;
 }
