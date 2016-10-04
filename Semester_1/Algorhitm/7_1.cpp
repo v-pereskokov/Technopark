@@ -26,7 +26,7 @@ int main() {
   int weight;
   int power;
   size_t n = 0;
-  while (scanf("%d %d", &weight, &power) || n <= 100000) {
+  while (scanf("%d %d", &weight, &power) && n <= 100000) {
     athletes.push_back(Athlete(weight, power));
     ++n;
   }
