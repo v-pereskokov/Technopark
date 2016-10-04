@@ -1,11 +1,10 @@
-#include <iostream>
 #include <stdio.h>
 #include <vector>
 
 struct Athlete {
   Athlete(const int weight, const int power)
   : _weight(weight), _power(power) {}
-  
+
   int _weight;
   int _power;
 };
@@ -31,7 +30,8 @@ int main() {
     athletes.push_back(Athlete(weight, power));
     ++n;
   }
-  std::sort(athletes.begin(), athletes.end(), [](Athlete lhs, Athlete rhs){ return lhs._power < rhs._power; });
+  std::sort(athletes.begin(), athletes.end(),
+            [](Athlete lhs, Athlete rhs){ return lhs._power < rhs._power; });
   printf("%d\n", maxPyramid(athletes));
   return 0;
 }
