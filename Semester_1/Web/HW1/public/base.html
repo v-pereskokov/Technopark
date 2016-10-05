@@ -1,39 +1,56 @@
 <DOCTYPE! html>
 
 <html>
-	<head>
-		<title>BASE</title>
-		<meta charset="utf-8">
-		<link href="../static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="../static/style.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<div class="header border">
-			<div class="row">
-				<div class="col-md-12 ">
-					<div class="header-logo">
-						<img src="../static/imgs/check.png" class="logo">
-						<h3 class="logo-text">TopQuestion</h3>
+<head>
+	<title>BASE</title>
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+	<link href="../static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="../static/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="header border">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="header-logo">
+					<a href="#">
+						<img src="../static/imgs/check.png" class="header-logo-img">
+						<h1 class="header-logo-text">TopQuestion</h1>
+					</a>
+				</div>
+				<div class="header-menu">
+					<div class="header-menu-nav">
+						<nav>
+							<ul class="header-menu-nav-ul">
+								<li class="header-menu-nav-ul-li"><a href="#" class="header-menu-nav-ul-li-a">questions</a></li>
+								<li class="header-menu-nav-ul-li"><a href="#" class="header-menu-nav-ul-li-a">ask!</a></li>
+							</ul>
+						</nav>
+						<div class="header-menu-nav-search">
+						<form class="form-search">
+						  <input type="text" class="input-medium search-query" placeholder="Search">
+						  <button type="submit" class="btn">ASK</button>
+						</form>
 					</div>
-					<div class="header-menu">
-						<ul class="nav nav-pills nav-justified">
-						  	<li role="presentation" class="active"><a href="#">Home</a></li>
-						  	<li role="presentation"><a href="#">Profile</a></li>
-						  	<li role="presentation"><a href="#">Messages</a></li>
-						</ul>
 					</div>
-					<div class="header-user">
+				</div>
+				<div class="header-user">
+					<img src="../static/imgs/avatar_user.png" class="img-circle header-user-avatar">
+					<div class="header-user-info">
+						<p class="header-user-info-p"><a href="#" class="header-user-info-p-a">settings</a></p>
+						<p class="header-user-info-p"><a href="#" class="header-user-info-p-a">logout</a></p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="middle">
-			<div class="menu">
-			</div>
-			<div class="content">
-			</div>
+	</div>
+	<div class="middle">
+		<div class="menu">
 		</div>
-		<div class="footer">
+		<div class="content">
 		</div>
-	</body>
+	</div>
+	<div class="footer">
+	</div>
+</body>
 </html>
