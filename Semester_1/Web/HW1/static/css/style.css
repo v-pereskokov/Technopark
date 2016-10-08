@@ -1,5 +1,5 @@
 body {
-	margin: 0;
+	margin: 0 0;
 	background: #8a9597;
 	font-family: 'Indie Flower', cursive;
 }
@@ -146,20 +146,21 @@ a:visited {
 
 .header-menu-nav-register-btn-signup {
 	padding-left: 80px;
-	margin-top: -34px;
+	margin-top: -48px;
+	color: blue;
 }
 
 /* Контентнтая часть */
 
-/* Список вопросов */
-.questions {
+/* Список вопросов (главная) */
+.questions, .new-question {
 	width: 700px;
 	height: 700px;
 	margin-top: -540px;
 	margin-left: 100px;
 }
 
-.questions-title {
+.questions-title, .new-question-title, .question-page {
 	text-align: center;
 	font: 28pt 'Cormorant Garamond';
 }
@@ -236,11 +237,234 @@ a:visited {
 }
 
 .question-pagination {
-	margin-left: 30%;
+	margin-left: 34%;
 }
 
 .question-pagination ul {
 	font: 15pt 'Cormorant Garamond';
+}
+/* Страница нового вопроса */
+.new-question {
+	height: 520px;
+	background: #303030;
+	color: white;
+}
+
+.form-new-question {
+	font: 18pt 'Cormorant Garamond';
+	width: 60%;
+	margin-top: 7%;
+	margin-left: 5%;
+}
+
+.form-new-question-edit-text {
+	width: 330px;
+	height: 30px;
+	color: black;
+	margin-top: 5%;
+	margin-left: 15px;
+}
+
+.form-new-question-textarea {
+	width: 379px;
+	height: 300px;
+	font: 18pt 'Cormorant Garamond';
+	color: black;
+	margin-top: 5%;
+	margin-left: 15px;
+}
+
+.form-new-question-btn {
+	margin-top: 25px;
+	margin-left: 190px;
+	color: black;
+}
+/* Страница одного вопроса  */
+.question-page {
+	width: 700px;
+	height: 1500px;
+	background: white;
+	margin-top: -540px;
+	margin-left: 100px;
+}
+
+.question-page-avatar {
+	width: 120px;
+	height: 120px;
+	margin: 2% 4%;
+}
+
+.question-page-avatar-img {
+	width: 100%;
+	height: 100%;
+}
+
+.question-page-like {
+	width: 40px;
+	height: 40px;
+	margin-left: 7.5%;
+}
+
+.question-page-like-img {
+	width: 100%;
+	height: 100%;
+}
+
+.question-page-like-count {
+	font: 16pt 'Cormorant Garamond';
+	margin-top: -35px;
+	padding-left: 50px;
+}
+
+.question-page-title {
+	font: 20pt 'Cormorant Garamond';
+	text-decoration: underline;
+	margin-top: -170px;
+	padding-left: 40px;
+}
+
+.question-page-description {
+	width: 500px;
+	font: 16pt 'Cormorant Garamond';
+	margin-top: 30px;
+	margin-left: 170px;
+	text-align: left;
+}
+
+.question-page-tags-title {
+	font: 18pt 'Cormorant Garamond';
+	margin-top: 0px;
+	margin-left: -310px;
+}
+
+.question-page-tags {
+	margin-top: -30px;
+	margin-left: 200px;
+}
+
+.question-page-answers {
+	width: 85%;
+	height: 170px;
+	margin-top: 2%;
+	margin-left: 7.5%;
+}
+
+.question-page-answers:hover {
+	background: #ffffcc;
+}
+
+.question-page-answer-avatar {
+	width: 90px;
+	height: 90px;
+	margin: 5 5;
+}
+
+.question-page-answer-avatar-img {
+	width: 100%;
+	height: 100%;
+}
+
+.question-page-answer-like {
+	width: 35px;
+	height: 35px;
+	margin: 7 15;
+}
+
+.question-page-answer-like-img {
+	width: 100%;
+	height: 100%;
+}
+
+.question-page-answer-like-count {
+	font: 15pt 'Cormorant Garamond';
+	margin-top: -25px;
+	margin-left: 45px;
+}
+
+.question-page-answer-description {
+	width: 440px;
+	font: 12pt 'Cormorant Garamond';
+	text-align: left;
+	margin-top: -120px;
+	margin-left: 120px;
+}
+
+.question-page-answer-ok {
+	width: 25px;
+	height: 25px;
+	margin-top: 33px;
+	margin-left: 120px;
+}
+
+.question-page-answer-ok-img {
+	width: 100%;
+	height: 100%;
+}
+
+.question-page-input-form {
+	margin-top: 20px;
+}
+
+.question-page-input-form-text {
+	width: 595px;
+	height: 300px;
+	font: 14pt 'Cormorant Garamond';
+	margin-left: 7.5%;
+}
+
+.question-page-answer-ok-correct {
+	font: 16pt 'Indie Flower';
+	margin-left: -15px;
+}
+
+.question-page-answer-done {
+	font: 16pt 'Indie Flower';
+	margin-top: 10px;
+}
+
+.login {
+	width: 800px;
+	height: 500px;
+	background: #303030;
+	margin-top: -530px;
+	margin-left: 40px;
+}
+
+.login-form-group {
+	width: 250px;
+	color: white;
+	margin-left: 5%;
+	font: 16pt 'Indie Flower';
+}
+
+.login-btn {
+	margin-top: 2%;
+	margin-left: 5%;
+	font: 16pt 'Indie Flower';
+}
+
+.login-title {
+	color: white;
+	font: 30pt 'Indie Flower';
+	margin-left: 360px;
+}
+
+.login-form-group-file {
+	font: 11pt 'Indie Flower';
+}
+
+.user {
+	width: 700px;
+	height: 500px;
+	background: #303030;
+	font: 30pt 'Indie Flower';
+	margin-top: -540px;
+	margin-left: 100px;
+}
+
+.settings-user {
+	margin-top: -120px;
+	margin-left: 200px;
 }
 
 /* Правые блоки */
