@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="header-logo">
-					<a href="#">
+					<a href="index.html">
 						<img src="../static/imgs/check.png" class="header-logo-img">
 						<h1 class="header-logo-text">TopQuestion</h1>
 					</a>
@@ -22,55 +22,60 @@
 					<div class="header-menu-nav">
 						<nav>
 							<ul class="header-menu-nav-ul">
-								<li class="header-menu-nav-ul-li"><a href="#" class="header-menu-nav-ul-li-a">questions</a></li>
-								<li class="header-menu-nav-ul-li"><a href="#" class="header-menu-nav-ul-li-a">ask!</a></li>
+								<li class="header-menu-nav-ul-li"><a href="questions.html" class="header-menu-nav-ul-li-a">questions</a></li>
+								<li class="header-menu-nav-ul-li"><a href="ask.html" class="header-menu-nav-ul-li-a">ask!</a></li>
 							</ul>
 						</nav>
 						<div class="header-menu-nav-search">
 							<form class="form-search">
 								<input type="text" class="input-medium search-query" placeholder="Search">
-								<button type="submit" class="btn">ASK</button>
+								<button type="submit" class="btn"><a href="questions.html">Ask</a></button>
 							</form>
 						</div>
-					</div>
-				</div>
-				<div class="header-user">
-					<img src="../static/imgs/avatar_user.png" class="img-circle header-user-avatar">
-					<div class="header-user-info">
-						<p class="header-user-info-p"><a href="user_settinds.html" class="header-user-info-p-a">settings</a></p>
-						<p class="header-user-info-p"><a href="index.html" class="header-user-info-p-a">logout</a></p>
+						<div class="header-menu-nav-register-btns">
+							<div class="header-menu-nav-register-btn-login">
+								<form>
+									<input type="button" class="btn btn-large" value="LogIn" onClick='location.href="login.html"'>
+								</form>
+							</div>
+							<div class="header-menu-nav-register-btn-signup">
+								<form>
+									<input type="button" class="btn btn-large" value="SignUp" onClick='location.href="signup.html"'>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="right">
-		<div class="right-tags border">
-			<p>Tags:</p>
-			<ul>
-				<li><a href="#">tag1</a></li>
-				<li><a href="#">tag2</a></li>
-				<li><a href="#">tag3</a></li>
-			</ul>
-		</div>
-		<div class="right-technopark border">
-			<a href="https://park.mail.ru/blog/topic/4815/">
-				<img src="../static/imgs/tp.png" class="right-technopark-img">
-			</a>
-		</div>
-		<div class="right-soc-network">
-			<div class="right-soc-network-vk">
-				<a href="https://vk.com/feed">
-					<img src="../static/imgs/vk.png" class="right-soc-network-vk-img">
+			<div class="right-tags border">
+				<p class="right-tags-title">Tags:</p>
+				<ul>
+					<li><a href="questions.html">tag1</a></li>
+					<li><a href="questions.html">tag2</a></li>
+					<li><a href="questions.html">tag3</a></li>
+				</ul>
+			</div>
+			<div class="right-technopark border">
+				<a href="https://park.mail.ru/blog/topic/4815/">
+					<img src="../static/imgs/tp.png" class="right-technopark-img">
 				</a>
 			</div>
-			<div class="right-soc-network-github">
-				<a href="https://github.com/vladpereskokov">
-					<img src="../static/imgs/github.png" class="right-soc-network-github-img">
-				</a>
+			<div class="right-soc-network">
+				<div class="right-soc-network-vk">
+					<a href="https://vk.com/feed">
+						<img src="../static/imgs/vk.png" class="right-soc-network-vk-img">
+					</a>
+				</div>
+				<div class="right-soc-network-github">
+					<a href="https://github.com/vladpereskokov">
+						<img src="../static/imgs/github.png" class="right-soc-network-github-img">
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
 	<div class="footer">
 	</div>
 </body>
