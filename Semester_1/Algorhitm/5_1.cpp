@@ -2,9 +2,12 @@
 #include <cassert>
 #include <string>
 
+#define methods
+#define parametres
+
 template <class T>
 class Stack {
-public:
+public methods:
   explicit Stack(const int size)
   :_size(size), _top(-1) {
     _buffer = new T[_size];
@@ -37,7 +40,7 @@ public:
     return _top;
   }
   
-private:
+private parametres:
   T *_buffer;
   int _size;
   int _top;
@@ -142,7 +145,7 @@ int main() {
   while (std::cin >> target) {
     result += target;
   }
-  if (result.size() <= 200000) {
+  if (result.size() > 0) {
     result = bracket(&result);
     std::cout << result << std::endl;
   } else {

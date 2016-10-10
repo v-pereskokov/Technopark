@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cassert>
+#include <string.h>
 
 #define methods
 
@@ -49,8 +50,7 @@ int Queue::pop() {
 void Queue::grow() {
   int newSize = _size * 2;
   int* newBuffer = new int[newSize];
-  for(std::size_t i = 0; i < _size; ++i)
-    newBuffer[i] = _buffer[i];
+  memcpy(newBuffer, _buffer, _size * sizeof(int));
   delete[] _buffer;
   _buffer = newBuffer;
   _size = newSize;
