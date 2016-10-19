@@ -1,18 +1,28 @@
 #include <stdio.h>
+#include <vector>
+#include <iostream>
 
-int pyramid(int n, int limit) {
-  if (n == 1 || n == 0 || limit == 1)
-    return 1;
-  int res = 0;
-  for (int i = n > limit ? limit : n; i > 0; --i) {
-    res += pyramid(n - i, i);
+typedef long long int lli;
+
+lli fillTable(std::vector<std::vector<lli>> *table, int search) {
+  for (int i = 1; i < table->size(); ++i) {
+    for (int j = 1; j < table->size(); ++j) {
+      lli k = 0;
+      if (i - j > 0) {
+        k = (*table)[i - j - 1][j];
+      } else if (i == j) {
+        k = 1;
+      }
+      (*table)[i][j] = (*table)[i][j - 1] + k;
+    }
   }
-  return res;
+  return (*table)[1][1];
 }
 
 int main() {
   int n;
   scanf("%d", &n);
-  printf("%d\n", pyramid(n, n));
+  std::vector<std::vector<lli>> pyramid(n, std::vector<lli>(n, 1));
+  printf("%lli\n", fillTable(&pyramid, n));
   return 0;
 }

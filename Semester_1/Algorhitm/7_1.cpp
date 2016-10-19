@@ -1,37 +1,47 @@
 #include <stdio.h>
 #include <vector>
+#include <algorithm>
+#include <cassert>
+
+using ulli = unsigned long long int;
 
 struct Athlete {
-  Athlete(const int weight, const int power)
-  : _weight(weight), _power(power) {}
-
-  int _weight;
-  int _power;
+  Athlete(const ulli m, const ulli s)
+  : _m(m),  _s(s) {}
+  
+  ulli _m;
+  ulli _s;
 };
 
-int maxPyramid(const std::vector<Athlete> &athletes) {
-  int num = 0;
-  int sum = 0;
-  for (size_t i = 0; i < athletes.size(); ++i) {
-    if (athletes[i]._power >= sum) {
-      sum += athletes[i]._weight;
-      ++num;
+std::size_t __maxPyramid__(const std::vector<Athlete> &athletes) {
+  std::vector<Athlete> result{ athletes[0] };
+  ulli sum = athletes[0]._m;
+  for (std::size_t i = 1; i < athletes.size(); ++i) {
+    Athlete current = athletes[i];
+    if (sum <= current._s) {
+      result.push_back(current);
+      sum += current._m;
     }
   }
-  return num;
+  return result.size();
+}
+
+std::size_t maxPyramid(std::vector<Athlete> *athletes) {
+  std::sort(athletes->begin(), athletes->end(), [](const Athlete &lhs, const Athlete &rhs){ return lhs._s < rhs._s; });
+  std::stable_sort(athletes->begin(), athletes->end(), [](const Athlete &lhs, const Athlete &rhs){ return lhs._m < rhs._m; });
+  return __maxPyramid__(*athletes);
 }
 
 int main() {
+  ulli m, s;
+  std::size_t n = 0;
   std::vector<Athlete> athletes;
-  int weight;
-  int power;
-  size_t n = 0;
-  while (scanf("%d %d", &weight, &power) && n <= 100000) {
-    athletes.push_back(Athlete(weight, power));
-    ++n;
+  while (n++ <= 100000 && scanf("%lld %lld", &m, &s) == 2) {
+    assert(m > 0 && s > 0 && m <= 2000000 && s <= 2000000);
+    athletes.push_back(Athlete(m, s));
   }
-  std::sort(athletes.begin(), athletes.end(),
-            [](Athlete lhs, Athlete rhs){ return lhs._power < rhs._power; });
-  printf("%d\n", maxPyramid(athletes));
+  if (n > 1) {
+    printf("%lu\n", maxPyramid(&athletes));
+  }
   return 0;
 }
