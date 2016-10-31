@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <assert.h>
-#include <iostream>
 
 struct Train {
   using time_type = int;
