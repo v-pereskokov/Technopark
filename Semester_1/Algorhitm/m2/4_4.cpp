@@ -23,7 +23,7 @@ IT partition_(IT begin, IT end, comparator &comp) {
   IT pivot = end;
   IT it = begin - 1;
   for (IT jt = begin; jt != pivot; ++jt) {
-    if (!comp(*pivot, *jt)) {
+    if (comp(*jt, *pivot)) {
       ++it;
       std::swap(*it, *jt);
     }
@@ -53,7 +53,7 @@ IT randomPartition(IT begin, IT end, comparator &comp) {
   if (pivot != 0) {
     std::swap(*begin, *(begin + pivot));
   }
-  return partition_(begin, end, comp);
+  return partition1_(begin, end, comp);
 }
 
 template <class IT, class comparator>
