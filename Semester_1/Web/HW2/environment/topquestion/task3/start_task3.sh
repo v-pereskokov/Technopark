@@ -8,5 +8,5 @@ APP=$2
 ROOT=/var/www/environment/topquestion/task3
 
 cd $ROOT
-exec gunicorn -c $ROOT/$CONF --bind localhost:8081 $APP:application
+exec gunicorn -c $ROOT/$CONF $APP:application
 
