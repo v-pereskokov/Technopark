@@ -7,3 +7,5 @@
 Аналогично выполняется запуск 4 задания, но из директории **root/topquestion/topquestion**. Скрипт *start_task4 \<conf\> \<application\>*.
 
 В директории **root/topquestion/task4** расположена функция получения GET/POST параметров. В файле *views.py*.
+
+В директории **task5** находятся конфиги nginx + nginx.conf, в котором раскомментированы необходимые gzip строки. 
