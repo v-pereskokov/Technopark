@@ -25,7 +25,7 @@ server {
     index index.html;
   }
 
-  location ~* /uploads/ {
+  location /uploads/ {
     root /var/www/environment/topquestion/;
   }
 
