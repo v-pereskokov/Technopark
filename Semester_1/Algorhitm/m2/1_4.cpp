@@ -24,11 +24,18 @@ bool cmpString(IT begin1, IT end1, IT begin2, IT end2, const comparator &comp) {
   return std::distance(begin1, end1) > std::distance(begin2, end2) ? false : true;
 }
 
+int StrCmp(const char* a, const char* b) {
+  while (*a && *b && *a == *b)
+        ++a, ++b;
+  return *a - *b;
+}
+
 template <class IT, class comparator>
 void insertionSort(IT begin, IT end, const comparator &comp) {
   for (auto it = begin + 1; it != end; ++it) {
     for (auto jt = it - 1; jt != begin - 1; --jt) {
-      if (!cmpString(jt->begin(), jt->end(), (jt + 1)->begin(), (jt + 1)->end(), less)) {
+//      if (!cmpString(jt->begin(), jt->end(), (jt + 1)->begin(), (jt + 1)->end(), less)) {
+      if (StrCmp(jt->c_str(), (jt + 1)->c_str()) > 0) {
         std::swap(*jt, *(jt + 1));
       }
     }
