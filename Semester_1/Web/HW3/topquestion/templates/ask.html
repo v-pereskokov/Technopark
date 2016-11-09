@@ -1,0 +1,24 @@
+{% extends "base.html"%}
+
+{% block title%} Ask {% endblock %}
+
+{% block content %}
+<div class="content">
+	<div class="new-question border">
+		<div class="new-question-title">
+			<p>New question:</p>
+		</div>
+		<div class="form-new-question">
+			<form>
+				<p>title: 
+				<input type="text" class="form-new-question-edit-text" placeholder="title"></input></p>
+				<p>text: 
+					<textarea class="form-new-question-textarea form-control" placeholder="text"></textarea></p>
+				<p>tags: 
+					<input type="text" class="form-new-question-edit-text" placeholder="tags"></input></p>
+				<p><button type="submit" class="btn form-new-question-btn">Send</button></p>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
