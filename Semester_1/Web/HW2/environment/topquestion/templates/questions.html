@@ -1,231 +1,53 @@
-<DOCTYPE! html>
+{% extends "base.html"%}
 
-<html>
-<head>
-	<title>Main page</title>
-	<meta charset="utf-8">
-	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:500" rel="stylesheet">
-	<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="css/style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-	<div class="header border">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="header-logo">
-					<a href="index.html">
-						<img src="imgs/check.png" class="header-logo-img">
-						<h1 class="header-logo-text">TopQuestion</h1>
-					</a>
-				</div>
-				<div class="header-menu">
-					<div class="header-menu-nav">
-						<nav>
-							<ul class="header-menu-nav-ul">
-								<li class="header-menu-nav-ul-li"><a href="questions.html" class="header-menu-nav-ul-li-a">questions</a></li>
-								<li class="header-menu-nav-ul-li"><a href="ask.html" class="header-menu-nav-ul-li-a">ask!</a></li>
-							</ul>
-						</nav>
-						<div class="header-menu-nav-search">
-							<form class="form-search">
-								<input type="text" class="input-medium search-query" placeholder="Search">
-								<button type="submit" class="btn"><a href="questions.html">Ask</a></button>
-							</form>
-						</div>
-						<div class="header-menu-nav-register-btns">
-							<div class="header-menu-nav-register-btn-login">
-								<form>
-									<input type="button" class="btn btn-large" value="LogIn" onClick='location.href="login.html"'>
-								</form>
-							</div>
-							<div class="header-menu-nav-register-btn-signup">
-								<form>
-									<input type="button" class="btn btn-large" value="SignUp" onClick='location.href="signup.html"'>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+{% block title%} Questions {% endblock %}
+
+{% block content %}
 	<div class="content">
-		<div class="right">
-			<div class="right-tags border">
-				<p class="right-tags-title">Tags:</p>
-				<ul>
-					<li><a href="questions.html">tag1</a></li>
-					<li><a href="questions.html">tag2</a></li>
-					<li><a href="questions.html">tag3</a></li>
-				</ul>
-			</div>
-			<div class="right-technopark border">
-				<a href="https://park.mail.ru/blog/topic/4815/">
-					<img src="imgs/tp.png" class="right-technopark-img">
-				</a>
-			</div>
-			<div class="right-soc-network">
-				<div class="right-soc-network-vk">
-					<a href="https://vk.com/feed">
-						<img src="imgs/vk.png" class="right-soc-network-vk-img">
-					</a>
-				</div>
-				<div class="right-soc-network-github">
-					<a href="https://github.com/vladpereskokov">
-						<img src="imgs/github.png" class="right-soc-network-github-img">
-					</a>
-				</div>
-			</div>
-		</div>
 		<div class="questions">
 			<div class="questions-title">
-				<p>Tag: tag_1</p>
+				<p>Tag: {{ tag___ }}</p>
 			</div>
-			<a href="question.html">
-				<div class="questions-question border">
-					<div class="questions-question-avatar">
-						<a href="user.html">
-							<img src="imgs/avatar_user.png" class="img-circle questions-question-avatar-img">
-						</a>
-					</div>
-					<div class="questions-question-like">
-						<a href="#action">
-							<img src="imgs/like.png" class="img-circle questions-question-like-img">
-						</a>
-						<p class="questions-question-like-count">5</p>
-					</div>
-					<div class="questions-question-title">
-						<a href="question.html">Как не быть быдлокодером</a>
-					</div>
-					<div class="questions-question-description">
-						<p>
-							Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
-						</p>
-					</div>
-					<div class="questions-question-answers">
-						<a href="question.html">
-							<span>Answers(</span><span id="answers">3</span><span>)</span>
-						</a>
-					</div>
-					<div class="questions-question-tags-title">
-						<span>Tags: </span>
-						<div class="questions-question-tags">
-							<a href="questions.html">tag1</a>
-							<a href="questions.html">tag2</a>
-							<a href="questions.html">tag3</a>
-						</div>
-					</div>
-				</div>
-			</a>
-			<a href="question.html">
-				<div class="questions-question border">
-					<div class="questions-question-avatar">
-						<a href="user.html">
-							<img src="imgs/avatar_user.png" class="img-circle questions-question-avatar-img">
-						</a>
-					</div>
-					<div class="questions-question-like">
-						<a href="#action">
-							<img src="imgs/like.png" class="img-circle questions-question-like-img">
-						</a>
-						<p class="questions-question-like-count">5</p>
-					</div>
-					<div class="questions-question-title">
-						<a href="question.html">Как не быть быдлокодером</a>
-					</div>
-					<div class="questions-question-description">
-						<p>
-							Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
-						</p>
-					</div>
-					<div class="questions-question-answers">
-						<a href="question.html">
-							<span>Answers(</span><span id="answers">3</span><span>)</span>
-						</a>
-					</div>
-					<div class="questions-question-tags-title">
-						<span>Tags: </span>
-						<div class="questions-question-tags">
-							<a href="questions.html">tag1</a>
-							<a href="questions.html">tag2</a>
-							<a href="questions.html">tag3</a>
-						</div>
-					</div>
-				</div>
-			</a>
-			<a href="question.html">
-				<div class="questions-question border">
-					<div class="questions-question-avatar">
-						<a href="user.html">
-							<img src="imgs/avatar_user.png" class="img-circle questions-question-avatar-img">
-						</a>
-					</div>
-					<div class="questions-question-like">
-						<a href="#action">
-							<img src="imgs/like.png" class="img-circle questions-question-like-img">
-						</a>
-						<p class="questions-question-like-count">5</p>
-					</div>
-					<div class="questions-question-title">
-						<a href="question.html">Как не быть быдлокодером</a>
-					</div>
-					<div class="questions-question-description">
-						<p>
-							Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
-						</p>
-					</div>
-					<div class="questions-question-answers">
-						<a href="question.html">
-							<span>Answers(</span><span id="answers">3</span><span>)</span>
-						</a>
-					</div>
-					<div class="questions-question-tags-title">
-						<span>Tags: </span>
-						<div class="questions-question-tags">
-							<a href="questions.html">tag1</a>
-							<a href="questions.html">tag2</a>
-							<a href="questions.html">tag3</a>
-						</div>
-					</div>
-				</div>
-			</a>
-			<a href="question.html">
-				<div class="questions-question border">
-					<div class="questions-question-avatar">
-						<a href="user.html">
-							<img src="imgs/avatar_user.png" class="img-circle questions-question-avatar-img">
-						</a>
-					</div>
-					<div class="questions-question-like">
-						<a href="question.html">
-							<img src="imgs/like.png" class="img-circle questions-question-like-img">
-						</a>
-						<p class="questions-question-like-count">5</p>
-					</div>
-					<div class="questions-question-title">
-						<a href="question.html">Как не быть быдлокодером</a>
-					</div>
-					<div class="questions-question-description">
-						<p>
-							Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
-						</p>
-					</div>
-					<div class="questions-question-answers">
-						<a href="question.html">
-							<span>Answers(</span><span id="answers">3</span><span>)</span>
-						</a>
-					</div>
-					<div class="questions-question-tags-title">
-						<span>Tags: </span>
-						<div class="questions-question-tags">
-							<a href="questions.html">tag1</a>
-							<a href="questions.html">tag2</a>
-							<a href="questions.html">tag3</a>
-						</div>
-					</div>
-				</div>
-			</a>
+			{% block content %}
+			{% for question_ in questions %}
+		        <a href="question.html">
+		        <div class="questions-question border">
+		          <div class="questions-question-avatar">
+		            <a href="user.html">
+		              <img src="imgs/avatar_user.png" class="img-circle questions-question-avatar-img">
+		            </a>
+		          </div>
+		          <div class="questions-question-like">
+		            <a href="#action">
+		              <img src="imgs/like.png" class="img-circle questions-question-like-img">
+		            </a>
+		            <p class="questions-question-like-count">5</p>
+		          </div>
+		          <div class="questions-question-title">
+		            <a href="question.html">{{ question_.head }}</a>
+		          </div>
+		          <div class="questions-question-description">
+		            <p>
+		              {{ question_.text }}
+		            </p>
+		          </div>
+		          <div class="questions-question-answers">
+		            <a href="question.html">
+		              <span>Answers(</span><span id="answers">3</span><span>)</span>
+		            </a>
+		          </div>
+		          <div class="questions-question-tags-title">
+		            <span>Tags: </span>
+		            <div class="questions-question-tags">
+		              {% for tag in question_.tags %}
+						<a href="questions.html">{{ tag.name }}</a>
+					  {% endfor %}
+		            </div>
+		          </div>
+		        </div>
+		      </a>
+			{% endfor %}
+			{% endblock %}
 			<div class="question-pagination">
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
@@ -249,7 +71,4 @@
 			</div>
 		</div>
 	</div>
-	<div class="footer">
-	</div>
-</body>
-</html>
+{% endblock %}

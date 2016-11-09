@@ -1,83 +1,9 @@
-<DOCTYPE! html>
+{% extends "base.html"%}
 
-<html>
-<head>
-	<title>Question228</title>
-	<meta charset="utf-8">
-	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:500" rel="stylesheet">
-	<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="css/style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-	<div class="header border">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="header-logo">
-					<a href="index.html">
-						<img src="imgs/check.png" class="header-logo-img">
-						<h1 class="header-logo-text">TopQuestion</h1>
-					</a>
-				</div>
-				<div class="header-menu">
-					<div class="header-menu-nav">
-						<nav>
-							<ul class="header-menu-nav-ul">
-								<li class="header-menu-nav-ul-li"><a href="questions.html" class="header-menu-nav-ul-li-a">questions</a></li>
-								<li class="header-menu-nav-ul-li"><a href="ask.html" class="header-menu-nav-ul-li-a">ask!</a></li>
-							</ul>
-						</nav>
-						<div class="header-menu-nav-search">
-							<form class="form-search">
-								<input type="text" class="input-medium search-query" placeholder="Search">
-								<button type="submit" class="btn"><a href="questions.html">Ask</a></button>
-							</form>
-						</div>
-						<div class="header-menu-nav-register-btns">
-							<div class="header-menu-nav-register-btn-login">
-								<form>
-									<input type="button" class="btn btn-large" value="LogIn" onClick='location.href="login.html"'>
-								</form>
-							</div>
-							<div class="header-menu-nav-register-btn-signup">
-								<form>
-									<input type="button" class="btn btn-large" value="SignUp" onClick='location.href="signup.html"'>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+{% block title%} Question {% endblock %}
+
+{% block content %}
 	<div class="content">
-		<div class="right">
-			<div class="right-tags border">
-				<p class="right-tags-title">Tags:</p>
-				<ul>
-					<li><a href="questions.html">tag1</a></li>
-					<li><a href="questions.html">tag2</a></li>
-					<li><a href="questions.html">tag3</a></li>
-				</ul>
-			</div>
-			<div class="right-technopark border">
-				<a href="https://park.mail.ru/blog/topic/4815/">
-					<img src="imgs/tp.png" class="right-technopark-img">
-				</a>
-			</div>
-			<div class="right-soc-network">
-				<div class="right-soc-network-vk">
-					<a href="https://vk.com/feed">
-						<img src="imgs/vk.png" class="right-soc-network-vk-img">
-					</a>
-				</div>
-				<div class="right-soc-network-github">
-					<a href="https://github.com/vladpereskokov">
-						<img src="imgs/github.png" class="right-soc-network-github-img">
-					</a>
-				</div>
-			</div>
-		</div>
 		<div class="question-page border">
 			<div class="question-page-avatar">
 				<a href="user.html">
@@ -91,22 +17,23 @@
 				<p class="question-page-like-count">5</p>
 			</div>
 			<div class="question-page-title">
-				<a href="question.html">Как не быть быдлокодером</a>
+				<a href="question.html">{{ questions[0].head }}</a>
 			</div>
 			<div class="question-page-description">
 				<p>
-					Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
+					{{ questions[0].text }}
 				</p>
 			</div>
 			<div class="question-page-tags-title">
 				<span>Tags: </span>
 				<div class="question-page-tags">
-					<a href="questions.html">tag1</a>
-					<a href="questions.html">tag2</a>
-					<a href="questions.html">tag3</a>
+					{% for tag in question_.tags %}
+						<a href="questions.html">{{ tag.name }}</a>
+					 {% endfor %}
 				</div>
 			</div>
 			<hr class="question-page-hr">
+			{% for answer in questions[0].answers %}
 			<div class="question-page-answers border">
 				<div class="answer">
 					<div class="question-page-answer-avatar">
@@ -122,35 +49,12 @@
 					</div>
 					<div class="question-page-answer-description">
 						<p>
-							Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
+							{{ answer.text }}
 						</p>
 					</div>
 				</div>
 			</div>
-			<div class="question-page-answers border">
-				<div class="answer">
-					<div class="question-page-answer-avatar">
-						<a href="user.html">
-							<img src="imgs/avatar_user.png" class="img-circle question-page-answer-avatar-img">
-						</a>
-					</div>
-					<div class="question-page-answer-like">
-						<a href="#action">
-							<img src="imgs/like.png" class="img-circle question-page-answer-like-img">
-						</a>
-						<p class="question-page-answer-like-count">5</p>
-					</div>
-					<div class="question-page-answer-description">
-						<p>
-							Lorem ipsum dolor sit amet, sed eu utamur sanctus signiferumque. Ei duo dico intellegat omittantur, verear copiosae vis ex, inani alienum eos eu. Pro eu unum intellegam. Quo malorum adipisci eu.
-						</p>
-					</div>
-					<div class="question-page-answer-ok">
-						<img src="imgs/check.png" class="question-page-answer-ok-img">
-						<span class="question-page-answer-ok-correct">Correct</span>
-					</div>
-				</div>
-			</div>
+			{% endfor %}
 			<div class="question-page-input-form">
 				<form>
 					<textarea class="question-page-input-form-text form-control" placeholder="input"></textarea>
@@ -159,8 +63,4 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="footer">
-</div>
-</body>
-</html>
+{% endblock %}
