@@ -62,9 +62,7 @@
 		<div class="right-tags border">
 			<p>Tags:</p>
 			<ul>
-				{% for tag in tags %}
-					<li><a>{{ tag.name }}</a></li>
-				{% endfor %}
+				{% block tags %}{% endblock %}
 			</ul>
 		</div>
 		<div class="right-technopark border">

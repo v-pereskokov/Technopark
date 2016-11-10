@@ -1,291 +1,412 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
-#include <ctype.h>
 #include <math.h>
+#include <ctype.h>
 
-typedef enum { false, true } bool;
+typedef enum { false = 0, true } bool;
 
-const int MAX_SIZE = 256;
+typedef struct stackD {
+  double *_data;
+  size_t _size;
+  int _head;
+} stackD;
 
-typedef enum Priority
-{
-  low, /*!< Низкий приоритет(для '+' и '-')*/
-  medium, /*!< Средний приоритет(для '*' и '/')*/
-  high, /*!< Высокий приоритет(для '^')*/
-  error = -1 /*!< В случае иных операторов(или символов)*/
-} Priority;
-
-// Стэк для double
-struct StackD
-{
-  double _value; /*!< Значение */
-  struct StackD *_next; /*!< Указатель на следующий элемент*/
-};
-
-void pushD(struct StackD **stack, const double value)
-{
-  struct StackD *tmp = (struct StackD *) malloc(sizeof(struct StackD));
-  tmp->_value = value;
-  tmp->_next = *stack;
-  *stack = tmp;
-}
-
-void popD(struct StackD **stack)
-{
-  struct StackD *tmp;
-  tmp = *stack;
-  *stack = (*stack)->_next;
-  if (tmp)
-    free(tmp);
-}
-
-struct StackD* popDN(struct StackD **stack) {
-  struct StackD *tmp;
-  if ((*stack) != NULL) {
-    tmp = *stack;
-    *stack = (*stack)->_next;
-    return tmp;
+stackD* createStackD(const size_t size) {
+  if (size > 1) {
+    stackD *out = NULL;
+    out = (stackD *) malloc(sizeof(stackD));
+    if (out == NULL) {
+      return NULL;
+    }
+    out->_data = (double *) malloc(size * sizeof(double));
+    if (out->_data == NULL) {
+      if (out) {
+        free(out);
+      }
+      return NULL;
+    }
+    out->_size = size;
+    out->_head = -1;
+    return out;
   }
   return NULL;
 }
 
-double topD(struct StackD **stack)
-{
-  return (*stack)->_value;
-}
-
-size_t getSizeD(const struct StackD *stack) {
-  size_t size = 0;
-  while (stack) {
-    ++size;
-    stack = stack->_next;
+void growStackD(stackD **stack) {
+  size_t newSize = (*stack)->_size << 1;
+  double *newData = (double *) malloc(newSize * sizeof(double));
+  if (newData != NULL) {
+    for (size_t i = 0; i < (*stack)->_size; ++i) {
+      newData[i] = (*stack)->_data[i];
+    }
+    if ((*stack)->_data) {
+      free((*stack)->_data);
+    }
+    (*stack)->_data = newData;
   }
-  return size;
 }
 
-// Стэк для char
-struct StackC
-{
-  char _value; /*!< Значение */
-  struct StackC *_next; /*!< Указатель на следующий элемент*/
-};
-
-void pushC(struct StackC **stack, const char value)
-{
-  struct StackC *tmp = (struct StackC *) malloc(sizeof(struct StackC));
-  tmp->_value = value;
-  tmp->_next = *stack;
-  *stack = tmp;
+void pushStackD(stackD **stack, const double value) {
+  size_t size = (*stack)->_size;
+  if ((*stack)->_head + 1 >= size) {
+    growStackD(stack);
+  }
+  (*stack)->_data[++((*stack)->_head)] = value;
 }
 
-void popC(struct StackC **stack)
-{
-  struct StackC *tmp;
-  tmp = *stack;
-  *stack = (*stack)->_next;
-  if (tmp)
-    free(tmp);
+double popStackD(stackD **stack) {
+  double out = (*stack)->_data[(*stack)->_head];
+  --((*stack)->_head);
+  return out;
 }
 
-struct StackC* popCN(struct StackC **stack) {
-  struct StackC *tmp;
-  if ((*stack) != NULL) {
-    tmp = *stack;
-    *stack = (*stack)->_next;
-    return tmp;
+double topStackD(stackD **stack) {
+  int head = (*stack)->_head;
+  if (head >= 0) {
+    return (*stack)->_data[head];
+  }
+  return 0;
+}
+
+bool isEmptyStackD(stackD **stack) {
+  return (*stack)->_head < 0;
+}
+
+size_t sizeStackD(stackD **stack) {
+  return (*stack)->_head + 1;
+}
+
+void freeStackD(stackD **stack) {
+  if ((*stack)->_data) {
+    free((*stack)->_data);
+  }
+  if (*stack) {
+    free(*stack);
+  }
+  *stack = NULL;
+}
+
+typedef struct stackC {
+  char *_data;
+  size_t _size;
+  int _head;
+} stackC;
+
+stackC* createStackC(const size_t size) {
+  if (size > 1) {
+    stackC *out = NULL;
+    out = (stackC *) malloc(sizeof(stackC));
+    if (out == NULL) {
+      return NULL;
+    }
+    out->_data = (char *) malloc(size * sizeof(char));
+    if (out->_data == NULL) {
+      if (out) {
+        free(out);
+      }
+      return NULL;
+    }
+    out->_size = size;
+    out->_head = -1;
+    return out;
   }
   return NULL;
 }
 
-char topC(struct StackC **stack)
-{
-  return (*stack)->_value;
-}
-
-size_t getSizeC(const struct StackC *stack) {
-  size_t size = 0;
-  while (stack) {
-    ++size;
-    stack = stack->_next;
-  }
-  return size;
-}
-
-void memoryClean(struct StackC *chars, struct StackD *doubles)
-{
-  struct StackC *tmpC = NULL;
-  while (chars) {
-    tmpC = popCN(&chars);
-    if (tmpC)
-      free(tmpC);
-  }
-  struct StackD *tmpD = NULL;
-  while (doubles) {
-    tmpD = popDN(&doubles);
-    if (tmpD)
-      free(tmpD);
+void growStackC(stackC **stack) {
+  size_t newSize = (*stack)->_size << 1;
+  char *newData = (char *) malloc(newSize * sizeof(char));
+  if (newData != NULL) {
+    for (size_t i = 0; i < (*stack)->_size; ++i) {
+      newData[i] = (*stack)->_data[i];
+    }
+    if ((*stack)->_data) {
+      free((*stack)->_data);
+    }
+    (*stack)->_data = newData;
   }
 }
 
-bool isOperator(char operators)
-{
+void pushStackC(stackC **stack, const char value) {
+  size_t size = (*stack)->_size;
+  if ((*stack)->_head + 1 >= size) {
+    growStackC(stack);
+  }
+  (*stack)->_data[++((*stack)->_head)] = value;
+}
+
+char popStackC(stackC **stack) {
+  char out = (*stack)->_data[(*stack)->_head];
+  --((*stack)->_head);
+  return out;
+}
+
+char topStackC(stackC **stack) {
+  int head = (*stack)->_head;
+  if (head >= 0) {
+    return (*stack)->_data[head];
+  }
+  return 0;
+}
+
+bool isEmptyStackC(stackC **stack) {
+  return (*stack)->_head < 0;
+}
+
+size_t sizeStackC(stackC **stack) {
+  return (*stack)->_head + 1;
+}
+
+void freeStackC(stackC **stack) {
+  if ((*stack)->_data) {
+    free((*stack)->_data);
+  }
+  if (*stack) {
+    free(*stack);
+  }
+  *stack = NULL;
+}
+
+#define MAX_LENGHT 128
+
+typedef char* string_t;
+typedef char operator_t;
+typedef double value_t;
+typedef bool* check_t;
+typedef enum { null = 0, space, operator, digit, bracket, other } states;
+typedef enum { error = -1, low, high } priorities;
+
+bool isOperator(const char operator) {
   return
-  operators == '+' || operators == '-' ||
-  operators == '*' || operators == '/' ||
-  operators == '^' ? true : false;
+  operator == '+' || operator == '-' ||
+  operator == '*' || operator == '/'
+  ? true : false;
 }
 
-Priority priority(char operators)
-{
+bool isDigit(const char digit) {
+  return (digit >= '0') && (digit <= '9');
+}
+
+bool isOpen(const char symbol) {
+  return symbol == '(';
+}
+
+bool isClosed(const char symbol) {
+  return symbol == ')';
+}
+
+bool isBracket(const char symbol) {
+  return isOpen(symbol) || isClosed(symbol);
+}
+
+states checkState(const string_t target, const size_t index) {
+  char symbol = target[index];
+  if (isspace(symbol)) {
+    return space;
+  } else if (isOperator(symbol)) {
+    return operator;
+  } else if (isDigit(symbol)) {
+    return digit;
+  } else if (isBracket(symbol)) {
+    return bracket;
+  }
+  return other;
+}
+
+priorities checkPriority(const char operator) {
   return
-  operators == '+' || operators == '-' ? low :
-  operators == '*' || operators == '/' ? medium :
-  operators == '^' ? high : error;
+  operator == '+' || operator == '-' ? low :
+  operator == '*' || operator == '/' ? high : error;
 }
 
-char action(char operators, struct StackD **values)
-{
-  double rhs = topD(values);
-  popD(values);
-  double lhs = topD(values);
-  popD(values);
-  switch (operators) {
+value_t calculate(const value_t lhs, const operator_t operator, const value_t rhs, check_t check) {
+  switch (operator) {
     case '+':
-      pushD(values, lhs + rhs);
-      break;
+      return lhs + rhs;
     case '-':
-      pushD(values, lhs - rhs);
-      break;
+      return lhs - rhs;
     case '*':
-      pushD(values, lhs * rhs);
-      break;
+      return lhs * rhs;
     case '/':
-      if (rhs == 0)
-        return 'e';
-      pushD(values, lhs / rhs);
-      break;
-    case '^':
-      pushD(values, pow(lhs, rhs));
-      break;
+      if (rhs == 0) {
+        *check = false;
+        return -1.;
+      }
+      return lhs / rhs;
+    default:
+      *check = false;
+      return -1;
   }
-  return 'g';
 }
 
-char *calculaton(const char *target)
-{
-  struct StackD *values = NULL; // Стек значений
-  struct StackC *operators = NULL; // Стек операторов
-  size_t sizeValues = 0; // Размер стека значений
-  size_t sizeOperators = 0; // Размер стека операторов
-  size_t isOpen = 0; // Число открывающих скобок
-  size_t length = strlen(target); // Длина поданной строки
-  for (size_t i = 0; i < length; ++i) {
-    if (target[i] == '(') { // Если нашли открывающую скобку
-      pushC(&operators, target[i]); // Заносим в стек
-      ++sizeOperators;  // Увеличиваем счетчик операторов
-      ++isOpen; // Скобка открыта
-    } else if (target[i] == ')') { // Если нашли закрывающую скобку
-      if (isOpen > 0) { // Если есть хотя бы одна открывающая
-        while (topC(&operators) != '(') { // Пока не встретим открывающую скобку - выполняем операции
-          if (sizeValues < 2) { // Проверяем на наличие в стеке хотя бы 2 значений
-            memoryClean(operators, values);
-            return "e";
-          }
-          char except = action(topC(&operators), &values); // Выполняем операции со значениями
-          --sizeValues;
-          if (except == 'e') {
-            memoryClean(operators, values);
-            return "e";
-          }
-          popC(&operators); // Удаляем из вершины использованный оператор
-          --sizeOperators;
-          if (sizeOperators <= 0) { // Выходим с ошибкой
-            memoryClean(operators, values);
-            return "e";
-          }
+bool isUnaryOperator(const states last) {
+  return last == null || last == bracket;
+}
+
+void handleOperator(const string_t target, const size_t index, stackD **values, stackC **operators, int *bracketCount, const states last, size_t *unary, check_t check) {
+  if (last == operator) {
+    *check = false;
+    return;
+  }
+  char currentOperator = target[index];
+  bool isEmptyStackOperators = isEmptyStackC(operators);
+  if (!isEmptyStackOperators) {
+    char lastOperator = topStackC(operators);
+    if (isOpen(lastOperator) && isUnaryOperator(last)) {
+      ++(*unary);
+    } else {
+      while (checkPriority(currentOperator) <= checkPriority(lastOperator)) {
+        double rhs = popStackD(values);
+        double lhs = popStackD(values);
+        double result = calculate(lhs, lastOperator, rhs, check);
+        if (!(*check)) {
+          return;
         }
-        --isOpen;
-        popC(&operators); // Удаляем из вершины скобку '('
-        --sizeOperators;
-      } else { // Выходим с ошибкой
-        memoryClean(operators, values);
+        pushStackD(values, result);
+        popStackC(operators);
+        lastOperator = topStackC(operators);
+      }
+    }
+  } else if (isUnaryOperator(last)){
+    ++(*unary);
+  }
+  if (*unary == 0 || (*unary > 0 && *bracketCount > *unary)) {
+    pushStackC(operators, currentOperator);
+  }
+}
+
+void handleDigits(const string_t target, size_t *index, const size_t lenght, stackD **values, stackC **operators, int *bracketCount, const states last, size_t *unary, check_t check) {
+  bool isDot = false;
+  char bufferDigit[255];
+  for (size_t iBuffer = 0; *index < lenght; ++(*index), ++iBuffer) {
+    char digit = target[*index];
+    if (isDigit(digit) || (!isDot && (target[*index] == '.' || target[*index] == '.'))) {
+      bufferDigit[iBuffer] = digit;
+      if (target[*index] == '.' || target[*index] == '.') {
+        isDot = true;
+      }
+    } else if (isOperator(target[*index]) || isBracket(target[*index]) || isspace(target[*index])) {
+      break;
+    } else {
+      *check = false;
+      return;
+    }
+  }
+  --(*index);
+  double addDigit = atof(bufferDigit);
+  if (*unary > 0 && *bracketCount == *unary) {
+    addDigit = -addDigit;
+    --(*unary);
+  }
+  pushStackD(values, addDigit);
+}
+
+void handleBracket(const string_t target, const size_t index, stackD **values, stackC **operators, int *bracketCount, const states last, size_t *unary, check_t check) {
+  char bracket = target[index];
+  if (isOpen(bracket)) {
+    pushStackC(operators, bracket);
+    ++(*bracketCount);
+  } else if (isClosed(bracket)) {
+    --(*bracketCount);
+    if (*bracketCount < 0) {
+      *check = false;
+      return;
+    }
+    char lastOperator = topStackC(operators);
+    while (sizeStackD(values) > 1 && !isOpen(lastOperator)) {
+      double rhs = popStackD(values);
+      double lhs = popStackD(values);
+      double result = calculate(lhs, lastOperator, rhs, check);
+      if (!(*check)) {
+        return;
+      }
+      pushStackD(values, result);
+      popStackC(operators);
+      lastOperator = topStackC(operators);
+    }
+    popStackC(operators);
+  }
+}
+
+string_t calculator(const string_t target) {
+  size_t lenght = strlen(target);
+  if (lenght >= 1) {
+    stackD *values = createStackD(4);
+    stackC *operators = createStackC(4);
+    bool check = true;
+    size_t unary = 0;
+    int bracketCount = 0;
+    states last = null;
+    for (size_t i = 0; i < lenght; ++i) {
+      states state = checkState(target, i);
+      switch (state) {
+        case space:
+        case null:
+          continue;
+        case operator:
+          handleOperator(target, i, &values, &operators, &bracketCount, last, &unary, &check);
+          if (!check) {
+            freeStackD(&values);
+            freeStackC(&operators);
+            return "e";
+          }
+          last = state;
+          break;
+        case digit:
+          handleDigits(target, &i, lenght, &values, &operators, &bracketCount, last, &unary, &check);
+          if (!check) {
+            freeStackD(&values);
+            freeStackC(&operators);
+            return "e";
+          }
+          last = state;
+          break;
+        case bracket:
+          handleBracket(target, i, &values, &operators, &bracketCount, last, &unary, &check);
+          if (!check) {
+            freeStackD(&values);
+            freeStackC(&operators);
+            return "e";
+          }
+          last = state;
+          break;
+        case other:
+          freeStackD(&values);
+          freeStackC(&operators);
+          return "e";
+      }
+    }
+    while (!isEmptyStackC(&operators)) {
+      char lastOperator = popStackC(&operators);
+      double rhs = popStackD(&values);
+      double lhs = popStackD(&values);
+      double result = calculate(lhs, lastOperator, rhs, &check);
+      if (!check) {
+        freeStackD(&values);
+        freeStackC(&operators);
         return "e";
       }
-    } else if (isOperator(target[i]) == true) { // Если символ - оператор
-      while (sizeOperators > 0 && priority(topC(&operators)) >= priority(target[i])) { // Проверяем приоритет и если операторы уже есть
-        if (sizeOperators >= sizeValues) {
-          memoryClean(operators, values);
-          return "e";
-        }
-        char except = action(topC(&operators), &values); // Находим значение, если приоритет операции ниже i
-        --sizeValues;
-        if (except == 'e') {
-          memoryClean(operators, values);
-          return "e";
-        }
-        popC(&operators);
-        --sizeOperators;
-      }
-      pushC(&operators, target[i]); // В ином случае просто добавляем еще один оператор
-      ++sizeOperators;
-    } else if (isdigit(target[i])) { // Если встретили число
-      char operand[MAX_SIZE]; // Массив для числа
-      size_t sizeOperand = 0;
-      bool isDot = false; // Есть ли точка или запятая
-      while (i < length && (isdigit(target[i]) || (isDot == false && (target[i] == '.' || target[i] == ',')))) {
-        if (isDot == false && target[i] == ',') { // Если встретили запятую, в массив добавляем точку
-          operand[sizeOperand] = '.';
-          ++sizeOperand;
-          continue;
-        }
-        operand[sizeOperand] = target[i];
-        ++sizeOperand;
-        ++i;
-      }
-      ++sizeValues;
-      --i;
-      pushD(&values, atof(operand)); // Добавляем в стек число
-    } else if (target[i] == ' ') // Если встретили пробел - идем дальше
-      continue;
-    else {
-      memoryClean(operators, values);
-      return "e";
+      pushStackD(&values, result);
     }
-  }
-  if (isOpen > 0 || sizeOperators >= sizeValues) { // Если открывающие скобки все еще остались - неверная скобочная последовательность => выходим
-    memoryClean(operators, values);
+    char *resultCalculate = (char *) malloc(255 * sizeof(char));
+    sprintf(resultCalculate, "%f", topStackD(&values));
+    freeStackD(&values);
+    freeStackC(&operators);
+    return resultCalculate;
+  } else {
     return "e";
   }
-  while (sizeOperators > 0) { // Если операторы еще остались - считаем оставшиеся значения
-    char except = action(topC(&operators), &values);
-    --sizeValues;
-    if (except == 'e') {
-      memoryClean(operators, values);
-      return "e";
-    }
-    popC(&operators);
-    --sizeOperators;
-  }
-  printf("%.2f", topD(&values));
-  printf("\n");
-  memoryClean(operators, values);
-  return "e";
 }
 
-int main()
-{
-  char *string = (char *) malloc(MAX_SIZE * sizeof(char));
-  gets(string);
-  char *result = calculaton(string);
+int main() {
+  char target[MAX_LENGHT];
+  gets(target);
+  string_t result = calculator(target);
   if (result[0] == 'e') {
     printf("[error]\n");
     return 0;
   }
-  if (result)
-    free(result);
-  if (string)
-    free(string);
+  printf("%.2f\n", atof(result));
   return 0;
 }

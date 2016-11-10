@@ -2,6 +2,11 @@
 
 {% block title%} Main page {% endblock %}
 
+{% block tags %}
+	{% for tag in tags %}
+	<li><a>{{ tag.name }}</a></li>	
+	{% endfor %}
+{% endblock %}
 {% block content %}
 	<div class="content">
 		<div class="questions">
