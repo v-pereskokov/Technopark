@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response, render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def init():
   questions = []
@@ -6,21 +7,34 @@ def init():
     questions.append({
       'head' : 'title' + str(i),
       'text' : 'text' + str(i),
-      'tags' : ['tag1', 'tag2', 'tag3'],
-      'answers' : [{'text' : 'answer1'}, {'text' : 'answer2'}]
+      'tags' : ['1', '2', '3'],
+      'answers' : [{'text' : 'answer1'}, {'text' : 'answer2'}],
+      'id' : i - 1,
     })
   hot_tags = ['tag1', 'tag2', 'tag3']
-  loged = None
+  loged = 1
   return { 'questions' : questions, 'hot_tags' : hot_tags, 'loged' : loged }
+
+def pagination(request):
+  init_list = init()
+  paginator = Paginator(init_list['questions'], 4)
+  page = request.GET.get('page')
+  try:
+    qs = paginator.page(page)
+  except PageNotAnInteger:
+    qs = paginator.page(1)
+  except EmptyPage:
+    qs = paginator.page(paginator.num_pages)
+  return qs
 
 def index(request):  
   init_list = init()
   tag = init_list['hot_tags'][0]
-  return render_to_response('index.html', {'questions_page_title' : 'Questions', 'questions' : init_list['questions'], 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
+  return render_to_response('index.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
 
 def questions(request):
   init_list = init()
-  return render_to_response('questions.html', {'questions_page_title' : 'Questions', 'questions' : init_list['questions'], 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
+  return render_to_response('questions.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
 
 def question(request, id):
   init_list = init()
@@ -28,7 +42,7 @@ def question(request, id):
 
 def questions_tag(request, tag):
   init_list = init()
-  return render_to_response('questions_tag.html', {'questions_page_title' : 'tag: ' + tag, 'questions' : init_list['questions'], 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged']})
+  return render_to_response('questions_tag.html', {'tag' : tag, 'questions_page_title' : 'tag: ' + tag, 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged']})
 
 def login(request):
   init_list = init()

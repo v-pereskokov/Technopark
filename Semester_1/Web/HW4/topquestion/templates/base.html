@@ -22,8 +22,8 @@
 					<div class="header-menu-nav">
 						<nav>
 							<ul class="header-menu-nav-ul"> 
-								<li class="header-menu-nav-ul-li"><a href="{% url 'questions' 1 %}" class="header-menu-nav-ul-li-a">questions</a></li>
-								<li class="header-menu-nav-ul-li"><a href="{% url 'ask_page' %}" class="header-menu-nav-ul-li-a">ask!</a></li>
+								<li class="header-menu-nav-ul-li"><a href="{% url 'hot questions' %}" class="header-menu-nav-ul-li-a">questions</a></li>
+								<li class="header-menu-nav-ul-li"><a href="{% url 'ask page'%}" class="header-menu-nav-ul-li-a">ask!</a></li>
 							</ul>
 						</nav>
 						<div class="header-menu-nav-search">
@@ -64,7 +64,7 @@
 			<p>Tags:</p>
 			<ul>
 				{% for tag in tags %}
-					<li><a href="{% url 'questions_tag' questions_tag %}">{{ tag }}</a></li>
+					<li><a href="{% url 'questions tag' tag %}">{{ tag }}</a></li>
 				{% endfor %}
 			</ul>
 		</div>

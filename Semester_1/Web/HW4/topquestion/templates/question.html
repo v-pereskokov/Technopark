@@ -1,23 +1,22 @@
 {% extends "base.html"%}
-
+{% load static %}
 {% block title%} Question {% endblock %}
-
 {% block content %}
   <div class="content">
     <div class="question-page border">
       <div class="question-page-avatar">
-        <a href="user.html">
-          <img src="../../static/imgs/avatar_user.png" class="img-circle question-page-avatar-img">
+        <a href="{% url 'user' %}">
+          <img src="{% static 'imgs/avatar_user.png' %}" class="img-circle question-page-avatar-img">
         </a>
       </div>
       <div class="question-page-like">
         <a href="#action">
-          <img src="../../static/imgs/like.png" class="img-circle question-page-like-img">
+          <img src="{% static 'imgs/like.png'%}" class="img-circle question-page-like-img">
         </a>
         <p class="question-page-like-count">5</p>
       </div>
       <div class="question-page-title">
-        <a href="question.html">{{ questions.head }}</a>
+        <a href="{% url 'question' questions.id %}">{{ questions.head }}</a>
       </div>
       <div class="question-page-description">
         <p>
@@ -28,7 +27,7 @@
         <span>Tags: </span>
         <div class="question-page-tags">
           {% for tag in questions.tags %}
-            <a href="questions.html">{{ tag }}</a>
+            <a href="{% url 'questions tag' questions.id %}">{{ tag }}</a>
            {% endfor %}
         </div>
       </div>
@@ -37,13 +36,13 @@
       <div class="question-page-answers border">
         <div class="answer">
           <div class="question-page-answer-avatar">
-            <a href="user.html">
-              <img src="../../static/imgs/avatar_user.png" class="img-circle question-page-answer-avatar-img">
+            <a href="{% url 'user' %}">
+              <img src="{% static 'imgs/avatar_user.png' %}" class="img-circle question-page-answer-avatar-img">
             </a>
           </div>
           <div class="question-page-answer-like">
             <a href="#action">
-              <img src="../../static/imgs/like.png" class="img-circle question-page-answer-like-img">
+              <img src="{% static 'imgs/like.png' %}" class="img-circle question-page-answer-like-img">
             </a>
             <p class="question-page-answer-like-count">5</p>
           </div>
