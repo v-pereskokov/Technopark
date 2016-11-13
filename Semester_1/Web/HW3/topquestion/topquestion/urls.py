@@ -20,7 +20,5 @@ from ask import views
 
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
-  url(r'^$', views.index),
-  url(r'^hot/?$', views.questions),
-  url(r'^tag/(?P<tag>.+)/?$', views.tag_question),
+  url(r'', include('ask.urls')),  
 ]

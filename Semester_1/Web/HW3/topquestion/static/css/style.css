@@ -266,12 +266,12 @@ a:visited {
 }
 
 .form-new-question-textarea {
-	width: 333px;
+	width: 330px;
 	height: 300px;
 	font: 18pt 'Cormorant Garamond';
 	color: black;
 	margin-top: -18px;
-	margin-left: 62px;
+	margin-left: 80px;
 }
 
 .form-new-question-btn {
