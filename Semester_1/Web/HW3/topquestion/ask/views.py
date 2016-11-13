@@ -18,11 +18,11 @@ def init():
 def index(request):  
   init_list = init()
   tag = init_list['hot_tags'][0]
-  return render_to_response('index.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
+  return render_to_response('index.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'], 'isPagination' : True })
 
 def questions(request):
   init_list = init()
-  return render_to_response('questions.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
+  return render_to_response('questions.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged', 'isPagination' : True] })
 
 def question(request, id):
   init_list = init()
@@ -30,7 +30,7 @@ def question(request, id):
 
 def questions_tag(request, tag):
   init_list = init()
-  return render_to_response('questions_tag.html', {'tag' : tag, 'questions_page_title' : 'tag: ' + tag, 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged']})
+  return render_to_response('questions_tag.html', {'tag' : tag, 'questions_page_title' : 'tag: ' + tag, 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'], 'isPagination' : True })
 
 def login(request):
   init_list = init()
