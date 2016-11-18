@@ -5,7 +5,7 @@ urlpatterns = [
   url(r'^$', views.index, name='index'),
   url(r'^$(?P<page>\d+)/', views.index, name='index'),
 
-  url(r'^hot/$', views.questions, name='hot questions'),
+  url(r'^hot/$', views.questions, name='hot_questions'),
   url(r'^hot/?page=(?P<page>\d+)?/$', views.questions, name='hot questions'),
 
   url(r'^tag/(?P<tag>\w+)/?$', views.questions_tag, name='questions tag'),
