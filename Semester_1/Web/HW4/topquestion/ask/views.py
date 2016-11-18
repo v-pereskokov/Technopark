@@ -1,50 +1,51 @@
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response, get_object_or_404
+from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from ask.models import *
 from helper import pagination
+import numpy as np
 
-def init():
-  questions = []
-  for i in xrange(1,30):
-    questions.append({
-      'head' : 'title' + str(i),
-      'text' : 'text' + str(i),
-      'tags' : ['1', '2', '3'],
-      'answers' : [{'text' : 'answer1'}, {'text' : 'answer2'}],
-      'id' : i - 1,
-    })
-  hot_tags = ['tag1', 'tag2', 'tag3']
-  loged = 1
-  return { 'questions' : questions, 'hot_tags' : hot_tags, 'loged' : loged }
+def randomTags():
+  tags = []
+  for i in range(Tag.objects.count()):
+    tags.append(str(Tag.objects.get(id = i + 1)))
+  np.random.shuffle(tags)
+  return tags[:3]
 
-def index(request):  
-  init_list = init()
-  tag = init_list['hot_tags'][0]
-  return render_to_response('index.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'], 'isPagination' : True })
+def index(request, page = '1'):
+  questions = pagination(request, Question.objects.hot(), 5, page) 
+  questions.paginator.baseurl = "/"
+  return render_to_response('questions.html', { 'questions_page_title' : 'Questions', 'questions' : questions, 'tags' : randomTags(), 'isLogging' : False })
 
-def questions(request):
-  init_list = init()
-  return render_to_response('questions.html', {'questions_page_title' : 'Questions', 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'], 'isPagination' : True })
+def questions(request, page = '1'):
+  questions = pagination(request, Question.objects.newest(), 5, page)
+  questions.paginator.baseurl = "/hot/"
+  return render_to_response('questions.html', { 'questions_page_title' : 'Questions', 'questions' : questions, 'tags' : randomTags(), 'isLogging' : False })
 
 def question(request, id):
-  init_list = init()
-  return render_to_response('question.html', {'questions' : init_list['questions'][int(id)]})
+  question_ = get_object_or_404(Question, pk = id)
+  answers = question_.answer_set.all() 
+  return render_to_response('question.html', { 'question' : question_, 'answers' : answers, 'tags' : randomTags(), 'isLogging' : False })
 
-def questions_tag(request, tag):
-  init_list = init()
-  return render_to_response('questions_tag.html', {'tag' : tag, 'questions_page_title' : 'tag: ' + tag, 'questions' : pagination(request), 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'], 'isPagination' : True })
+def questions_tag(request, tag, page = '1'):
+  tag_questions = Question.objects.tag_search(tag)
+  questions = pagination(request, tag_questions, 5, page)
+  questions.paginator.baseurl = "/tag/" + tag + "/"
+  return render_to_response('questions_tag.html', { 'tag' : tag, 'questions' : questions, 'tags' : randomTags(), 'questions_page_title' : 'Tag: ' + tag, 'isLogging' : False })
 
 def login(request):
-  init_list = init()
-  tag = init_list['hot_tags'][0]
-  return render_to_response('login.html', {'questions_page_title' : 'Questions', 'questions' : init_list['questions'], 'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged'] })
+  return render_to_response('login.html', { 'isLogging' : False, 'tags' : randomTags() })
 
 def signup(request):
-  init_list = init()
-  return render_to_response('signup.html', {'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged']})
+  return render_to_response('signup.html', { 'isLogging' : False, 'tags' : randomTags() })
 
 def ask_page(request):
-  init_list = init()
-  return render_to_response('ask.html', {'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged']})
+  return render_to_response('ask.html', { 'isLogging' : False, 'tags' : randomTags() })
 
-def user(request):
-  init_list = init()
-  return render_to_response('user_settings.html', {'tags' : init_list['hot_tags'], 'isLogging' : init_list['loged']})
+def user(request, user_name):
+  is_logging = { 'isLogging' : False }
+  random_tags = { 'tags' : randomTags() }
+  user = Question.objects.user_questions(user_name)
+  profile = Profile.objects.get(user_name)
+  return render_to_response('user_settings.html', { 'user' : user, 'profile' : profile[0], 'isLogging' : False, 'tags' : randomTags() })

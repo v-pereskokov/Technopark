@@ -15,6 +15,7 @@ class QuestionManager(models.Manager):
 
   def published(self):
     return self.filter(is_published=True)
+  
   def user_questions(self, user_name):
     return self.filter(user__username = user_name)
 
