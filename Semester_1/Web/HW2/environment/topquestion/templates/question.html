@@ -17,23 +17,23 @@
 				<p class="question-page-like-count">5</p>
 			</div>
 			<div class="question-page-title">
-				<a href="question.html">{{ questions[0].head }}</a>
+				<a href="question.html">{{ questions.head }}</a>
 			</div>
 			<div class="question-page-description">
 				<p>
-					{{ questions[0].text }}
+					{{ questions.text }}
 				</p>
 			</div>
 			<div class="question-page-tags-title">
 				<span>Tags: </span>
 				<div class="question-page-tags">
-					{% for tag in question_.tags %}
-						<a href="questions.html">{{ tag.name }}</a>
+					{% for tag in questions.tags %}
+						<a href="questions.html">{{ tag }}</a>
 					 {% endfor %}
 				</div>
 			</div>
 			<hr class="question-page-hr">
-			{% for answer in questions[0].answers %}
+			{% for answer in questions.answers %}
 			<div class="question-page-answers border">
 				<div class="answer">
 					<div class="question-page-answer-avatar">
