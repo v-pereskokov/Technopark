@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class QuestionManager(models.Manager):
   def newest(self):
-    return self.order_by('-created')
+    return self.order_by('-data')
 
   def hot(self):
     return self.order_by('-rating')
