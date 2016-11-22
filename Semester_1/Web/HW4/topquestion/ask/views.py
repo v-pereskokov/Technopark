@@ -3,7 +3,7 @@ from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from ask.models import *
-from helper import pagination
+from ask.helper import pagination
 import numpy as np
 
 def randomTags():
