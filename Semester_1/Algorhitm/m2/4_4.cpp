@@ -12,7 +12,6 @@ bool less(const data_type lhs, const data_type rhs) {
 }
 
 size_t random(const size_type begin, const size_type end) {
-  
   return end == 0 ? end : begin + rand() % end;
 }
 
@@ -46,12 +45,36 @@ IT partitionReverse_(IT begin, IT end, comparator &comp) {
 }
 
 template <class IT, class comparator>
+IT partitionBack(IT begin, IT end, comparator &comp) {
+  IT pivot = begin;
+  IT it = begin + 1;
+  IT jt = end - 1;
+  while (true) {
+    while (comp(*it, *begin)) {
+      --it;
+    }
+    while (comp(*begin, *jt)) {
+      --jt;
+    }
+    if (it < jt) {
+      std::swap(*it, *jt);
+      ++it, --jt;
+    } else {
+      --it;
+      std::swap(*begin, *it);
+      return it;
+    }
+  }
+}
+
+
+template <class IT, class comparator>
 IT randomPartition(IT begin, IT end, comparator &comp) {
   size_type pivot = random(0, std::distance(begin, end) - 1);
   if (pivot != 0) {
     std::swap(*begin, *(begin + pivot));
   }
-  return partitionReverse_(begin, end, comp);
+  return partitionBack(begin, end, comp);
 }
 
 template <class IT, class comparator>
