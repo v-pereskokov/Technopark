@@ -1,412 +1,162 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <ctype.h>
 
-typedef enum { false = 0, true } bool;
+const int MAX_LENGTH = 255;
 
-typedef struct stackD {
-  double *_data;
-  size_t _size;
-  int _head;
-} stackD;
+typedef char symbol;
+typedef symbol* string;
+typedef double data_t;
+typedef int index;
+typedef index* index_ptr;
 
-stackD* createStackD(const size_t size) {
-  if (size > 1) {
-    stackD *out = NULL;
-    out = (stackD *) malloc(sizeof(stackD));
-    if (out == NULL) {
-      return NULL;
-    }
-    out->_data = (double *) malloc(size * sizeof(double));
-    if (out->_data == NULL) {
-      if (out) {
-        free(out);
-      }
-      return NULL;
-    }
-    out->_size = size;
-    out->_head = -1;
-    return out;
-  }
-  return NULL;
-}
-
-void growStackD(stackD **stack) {
-  size_t newSize = (*stack)->_size << 1;
-  double *newData = (double *) malloc(newSize * sizeof(double));
-  if (newData != NULL) {
-    for (size_t i = 0; i < (*stack)->_size; ++i) {
-      newData[i] = (*stack)->_data[i];
-    }
-    if ((*stack)->_data) {
-      free((*stack)->_data);
-    }
-    (*stack)->_data = newData;
-  }
-}
-
-void pushStackD(stackD **stack, const double value) {
-  size_t size = (*stack)->_size;
-  if ((*stack)->_head + 1 >= size) {
-    growStackD(stack);
-  }
-  (*stack)->_data[++((*stack)->_head)] = value;
-}
-
-double popStackD(stackD **stack) {
-  double out = (*stack)->_data[(*stack)->_head];
-  --((*stack)->_head);
-  return out;
-}
-
-double topStackD(stackD **stack) {
-  int head = (*stack)->_head;
-  if (head >= 0) {
-    return (*stack)->_data[head];
-  }
-  return 0;
-}
-
-bool isEmptyStackD(stackD **stack) {
-  return (*stack)->_head < 0;
-}
-
-size_t sizeStackD(stackD **stack) {
-  return (*stack)->_head + 1;
-}
-
-void freeStackD(stackD **stack) {
-  if ((*stack)->_data) {
-    free((*stack)->_data);
-  }
-  if (*stack) {
-    free(*stack);
-  }
-  *stack = NULL;
-}
-
-typedef struct stackC {
-  char *_data;
-  size_t _size;
-  int _head;
-} stackC;
-
-stackC* createStackC(const size_t size) {
-  if (size > 1) {
-    stackC *out = NULL;
-    out = (stackC *) malloc(sizeof(stackC));
-    if (out == NULL) {
-      return NULL;
-    }
-    out->_data = (char *) malloc(size * sizeof(char));
-    if (out->_data == NULL) {
-      if (out) {
-        free(out);
-      }
-      return NULL;
-    }
-    out->_size = size;
-    out->_head = -1;
-    return out;
-  }
-  return NULL;
-}
-
-void growStackC(stackC **stack) {
-  size_t newSize = (*stack)->_size << 1;
-  char *newData = (char *) malloc(newSize * sizeof(char));
-  if (newData != NULL) {
-    for (size_t i = 0; i < (*stack)->_size; ++i) {
-      newData[i] = (*stack)->_data[i];
-    }
-    if ((*stack)->_data) {
-      free((*stack)->_data);
-    }
-    (*stack)->_data = newData;
-  }
-}
-
-void pushStackC(stackC **stack, const char value) {
-  size_t size = (*stack)->_size;
-  if ((*stack)->_head + 1 >= size) {
-    growStackC(stack);
-  }
-  (*stack)->_data[++((*stack)->_head)] = value;
-}
-
-char popStackC(stackC **stack) {
-  char out = (*stack)->_data[(*stack)->_head];
-  --((*stack)->_head);
-  return out;
-}
-
-char topStackC(stackC **stack) {
-  int head = (*stack)->_head;
-  if (head >= 0) {
-    return (*stack)->_data[head];
-  }
-  return 0;
-}
-
-bool isEmptyStackC(stackC **stack) {
-  return (*stack)->_head < 0;
-}
-
-size_t sizeStackC(stackC **stack) {
-  return (*stack)->_head + 1;
-}
-
-void freeStackC(stackC **stack) {
-  if ((*stack)->_data) {
-    free((*stack)->_data);
-  }
-  if (*stack) {
-    free(*stack);
-  }
-  *stack = NULL;
-}
-
-#define MAX_LENGHT 128
-
-typedef char* string_t;
-typedef char operator_t;
-typedef double value_t;
-typedef bool* check_t;
-typedef enum { null = 0, space, operator, digit, bracket, other } states;
-typedef enum { error = -1, low, high } priorities;
-
-bool isOperator(const char operator) {
-  return
-  operator == '+' || operator == '-' ||
-  operator == '*' || operator == '/'
-  ? true : false;
-}
-
-bool isDigit(const char digit) {
-  return (digit >= '0') && (digit <= '9');
-}
-
-bool isOpen(const char symbol) {
-  return symbol == '(';
-}
-
-bool isClosed(const char symbol) {
-  return symbol == ')';
-}
-
-bool isBracket(const char symbol) {
-  return isOpen(symbol) || isClosed(symbol);
-}
-
-states checkState(const string_t target, const size_t index) {
-  char symbol = target[index];
-  if (isspace(symbol)) {
-    return space;
-  } else if (isOperator(symbol)) {
-    return operator;
-  } else if (isDigit(symbol)) {
-    return digit;
-  } else if (isBracket(symbol)) {
-    return bracket;
-  }
-  return other;
-}
-
-priorities checkPriority(const char operator) {
-  return
-  operator == '+' || operator == '-' ? low :
-  operator == '*' || operator == '/' ? high : error;
-}
-
-value_t calculate(const value_t lhs, const operator_t operator, const value_t rhs, check_t check) {
-  switch (operator) {
-    case '+':
-      return lhs + rhs;
-    case '-':
-      return lhs - rhs;
-    case '*':
-      return lhs * rhs;
-    case '/':
-      if (rhs == 0) {
-        *check = false;
-        return -1.;
-      }
-      return lhs / rhs;
-    default:
-      *check = false;
-      return -1;
-  }
-}
-
-bool isUnaryOperator(const states last) {
-  return last == null || last == bracket;
-}
-
-void handleOperator(const string_t target, const size_t index, stackD **values, stackC **operators, int *bracketCount, const states last, size_t *unary, check_t check) {
-  if (last == operator) {
-    *check = false;
-    return;
-  }
-  char currentOperator = target[index];
-  bool isEmptyStackOperators = isEmptyStackC(operators);
-  if (!isEmptyStackOperators) {
-    char lastOperator = topStackC(operators);
-    if (isOpen(lastOperator) && isUnaryOperator(last)) {
-      ++(*unary);
-    } else {
-      while (checkPriority(currentOperator) <= checkPriority(lastOperator)) {
-        double rhs = popStackD(values);
-        double lhs = popStackD(values);
-        double result = calculate(lhs, lastOperator, rhs, check);
-        if (!(*check)) {
-          return;
-        }
-        pushStackD(values, result);
-        popStackC(operators);
-        lastOperator = topStackC(operators);
-      }
-    }
-  } else if (isUnaryOperator(last)){
-    ++(*unary);
-  }
-  if (*unary == 0 || (*unary > 0 && *bracketCount > *unary)) {
-    pushStackC(operators, currentOperator);
-  }
-}
-
-void handleDigits(const string_t target, size_t *index, const size_t lenght, stackD **values, stackC **operators, int *bracketCount, const states last, size_t *unary, check_t check) {
-  bool isDot = false;
-  char bufferDigit[255];
-  for (size_t iBuffer = 0; *index < lenght; ++(*index), ++iBuffer) {
-    char digit = target[*index];
-    if (isDigit(digit) || (!isDot && (target[*index] == '.' || target[*index] == '.'))) {
-      bufferDigit[iBuffer] = digit;
-      if (target[*index] == '.' || target[*index] == '.') {
-        isDot = true;
-      }
-    } else if (isOperator(target[*index]) || isBracket(target[*index]) || isspace(target[*index])) {
-      break;
-    } else {
-      *check = false;
-      return;
-    }
-  }
-  --(*index);
-  double addDigit = atof(bufferDigit);
-  if (*unary > 0 && *bracketCount == *unary) {
-    addDigit = -addDigit;
-    --(*unary);
-  }
-  pushStackD(values, addDigit);
-}
-
-void handleBracket(const string_t target, const size_t index, stackD **values, stackC **operators, int *bracketCount, const states last, size_t *unary, check_t check) {
-  char bracket = target[index];
-  if (isOpen(bracket)) {
-    pushStackC(operators, bracket);
-    ++(*bracketCount);
-  } else if (isClosed(bracket)) {
-    --(*bracketCount);
-    if (*bracketCount < 0) {
-      *check = false;
-      return;
-    }
-    char lastOperator = topStackC(operators);
-    while (sizeStackD(values) > 1 && !isOpen(lastOperator)) {
-      double rhs = popStackD(values);
-      double lhs = popStackD(values);
-      double result = calculate(lhs, lastOperator, rhs, check);
-      if (!(*check)) {
-        return;
-      }
-      pushStackD(values, result);
-      popStackC(operators);
-      lastOperator = topStackC(operators);
-    }
-    popStackC(operators);
-  }
-}
-
-string_t calculator(const string_t target) {
-  size_t lenght = strlen(target);
-  if (lenght >= 1) {
-    stackD *values = createStackD(4);
-    stackC *operators = createStackC(4);
-    bool check = true;
-    size_t unary = 0;
-    int bracketCount = 0;
-    states last = null;
-    for (size_t i = 0; i < lenght; ++i) {
-      states state = checkState(target, i);
-      switch (state) {
-        case space:
-        case null:
-          continue;
-        case operator:
-          handleOperator(target, i, &values, &operators, &bracketCount, last, &unary, &check);
-          if (!check) {
-            freeStackD(&values);
-            freeStackC(&operators);
-            return "e";
-          }
-          last = state;
-          break;
-        case digit:
-          handleDigits(target, &i, lenght, &values, &operators, &bracketCount, last, &unary, &check);
-          if (!check) {
-            freeStackD(&values);
-            freeStackC(&operators);
-            return "e";
-          }
-          last = state;
-          break;
-        case bracket:
-          handleBracket(target, i, &values, &operators, &bracketCount, last, &unary, &check);
-          if (!check) {
-            freeStackD(&values);
-            freeStackC(&operators);
-            return "e";
-          }
-          last = state;
-          break;
-        case other:
-          freeStackD(&values);
-          freeStackC(&operators);
-          return "e";
-      }
-    }
-    while (!isEmptyStackC(&operators)) {
-      char lastOperator = popStackC(&operators);
-      double rhs = popStackD(&values);
-      double lhs = popStackD(&values);
-      double result = calculate(lhs, lastOperator, rhs, &check);
-      if (!check) {
-        freeStackD(&values);
-        freeStackC(&operators);
-        return "e";
-      }
-      pushStackD(&values, result);
-    }
-    char *resultCalculate = (char *) malloc(255 * sizeof(char));
-    sprintf(resultCalculate, "%f", topStackD(&values));
-    freeStackD(&values);
-    freeStackC(&operators);
-    return resultCalculate;
-  } else {
-    return "e";
-  }
-}
+data_t number(string, index_ptr);
+data_t factor(string, index_ptr);
+data_t calculation(string, index_ptr);
+data_t brackets(string, index_ptr);
 
 int main() {
-  char target[MAX_LENGHT];
-  gets(target);
-  string_t result = calculator(target);
-  if (result[0] == 'e') {
-    printf("[error]\n");
-    return 0;
-  }
-  printf("%.2f\n", atof(result));
+  symbol target[255];
+  fgets(target, sizeof(target), stdin);
+  index i = 0;
+  data_t n = calculation(target, &i);
+  printf("%.2f\n", n);
   return 0;
+}
+
+data_t number(string target, index_ptr i) {
+  data_t result = 0.0;
+  data_t k = 10.0;
+  int sign = 1;
+  symbol c;
+  c = target[*i];
+  ++(*i);
+  while (c == ' ') {
+    c = target[*i];
+    ++(*i);
+  }
+  if (c == '-') {
+    sign = -1;
+  } else {
+    --(*i);
+  }
+  while (1) {
+    c = target[*i];
+    ++(*i);
+    while (c == ' ') {
+      c = target[*i];
+      ++(*i);
+    }
+    if (c >= '0' && c <= '9') {
+      result = result * 10.0 + (c - '0');
+    } else {
+      --(*i);
+      break;
+    }
+  }
+  c = target[*i];
+  ++(*i);
+  if (c == '.') {
+    while (1) {
+      c = target[*i];
+      ++(*i);
+      if (c >= '0' && c <= '9') {
+        result += (c - '0') / k;
+        k *= 10.0;
+      } else {
+        --(*i);
+        break;
+      }
+    }
+  } else {
+    --(*i);
+  }
+  return sign * result;
+}
+
+data_t factor(string target, index_ptr i) {
+  data_t result = brackets(target, i);
+  data_t temp;
+  symbol c;
+  while (1) {
+    c = target[*i];
+    ++(*i);
+    while (c == ' ') {
+      c = target[*i];
+      ++(*i);
+    }
+    switch (c) {
+      case '*':
+        result *= brackets(target, i);
+        break;
+      case '/':
+        temp = brackets(target, i);
+        if (temp == 0.0) {
+          printf("[error]");
+          exit(0);
+        }
+        result /= temp;
+        break;
+      default:
+        --(*i);
+        return result;
+    }
+  }
+}
+
+data_t calculation(string target, index_ptr i) {
+  data_t result = factor(target, i);
+  symbol c;
+  while (1) {
+    c = target[*i];
+    ++(*i);
+    while (c == ' ') {
+      c = target[*i];
+      ++(*i);
+    }
+    switch (c) {
+      case '+':
+        result += factor(target, i);
+        break;
+      case '-':
+        result -= factor(target, i);
+        break;
+      default:
+        --(*i);
+        return result;
+    }
+  }
+}
+
+data_t brackets(string target, index_ptr i) {
+  data_t result;
+  int sign = 1;
+  symbol c;
+  c = target[*i];
+  ++(*i);
+  while (c == ' ') {
+    c = target[*i];
+    ++(*i);
+  }
+  if (c == '-') {
+    sign = -1;
+    c = target[*i];
+    ++(*i);
+  }
+  while (c == ' ') {
+    c = target[*i];
+    ++(*i);
+  }
+  if (c == '(') {
+    result = sign * calculation(target, i);
+    c = target[*i];
+    ++(*i);
+    if (c != ')') {
+      printf("[error]");
+      exit(0);
+    }
+    return result;
+  } else {
+    --(*i);
+    return sign * number(target, i);
+  }
 }
