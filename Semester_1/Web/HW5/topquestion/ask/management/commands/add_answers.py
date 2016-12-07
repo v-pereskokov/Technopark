@@ -41,7 +41,7 @@ class Command(BaseCommand):
                 ans.text = fake.paragraph(nb_sentences=randint(2, 4), variable_nb_sentences=True)
                 ans.user = choice(users)
                 ans.question = q
-                ans.rating = randint(0, 5)
+                ans.rating = randint(0, 1500)
                 ans.is_correct = choice(is_correct)
                 ans.id = counter
                 counter += 1

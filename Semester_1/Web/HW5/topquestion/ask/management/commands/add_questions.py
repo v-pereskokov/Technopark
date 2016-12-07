@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     fake.paragraph(nb_sentences=randint(1, 4), variable_nb_sentences=True),
                     )
             q.user = choice(users)
-            q.rating = randint(0, 5)
+            q.rating = randint(0, 1500)
             q.is_published = True
             q.id = i
             q.save()

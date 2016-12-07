@@ -1,9 +1,6 @@
-#include <iostream>
 #include <cstring>
 #include <stack>
 #include <utility>
-
-//#include "sort_contest_autumn_2016/sort_header.cpp"
 
 template <class Type>
 int findPivot(Type *target, int begin, int end) {

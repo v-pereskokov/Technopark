@@ -104,25 +104,6 @@ class QuestionLikeManager(models.Manager):
 			qLike.question = question
 			user.profile.questionlikes.add(qLike)
 			user.profile.save()
-
-		if qLike.value == 0:
-			qLike.value = 1
-			question.rating = question.rating + 1
-			question.user.profile.rating = question.user.profile.rating + 1
-			qLike.is_liked = True
-		elif qLike.value == -1:
-			qLike.value = 1
-			question.rating = question.rating + 2
-			question.user.profile.rating = question.user.profile.rating + 2
-			qLike.is_liked = True
-			qLike.is_disliked = False
-
-		elif qLike.value == 1:
-			qLike.value = 0
-			question.rating = question.rating - 1
-			question.user.profile.rating = question.user.profile.rating - 1
-			qLike.is_liked = False
-
 		question.save()
 		question.user.profile.save()
 		qLike.save()

@@ -11,7 +11,7 @@
 		        <a href="/question/id{{ question_.id }}">
 		        <div class="questions-question border">
 		          <div class="questions-question-avatar">
-		            <a href="/user/{{ question.user.username }}">
+		            <a href="{% url 'user'  question_.user %}">
 		              <img src="/{{ question_.user.profile.avatar.url }}" class="img-circle questions-question-avatar-img">
 		            </a>
 		          </div>
