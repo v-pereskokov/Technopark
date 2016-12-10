@@ -41,7 +41,7 @@ class SignupForm(forms.Form):
     )
     email = forms.EmailField(
         label='Email',
-        widget=forms.TextInput(attrs={ 'class': 'form-control', 'placeholder': 'example@mail.ru', }),
+        widget=forms.EmailInput(attrs={ 'class': 'form-control', 'placeholder': 'example@mail.ru', }),
         max_length=100
     )
     password = forms.CharField(
@@ -195,7 +195,7 @@ class QuestionForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control noresize', 'rows': '5', 'placeholder': 'Enter your answer here', })
+        widget=forms.Textarea(attrs={'class': 'form-control question-page-input-form-text', 'rows': '5', 'placeholder': 'Enter your answer here', })
     )
 
     def save(self, question, user):

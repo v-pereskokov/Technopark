@@ -55,10 +55,16 @@
       </div>
       {% endfor %}
       <div class="question-page-input-form">
-        <form>
-          <textarea class="question-page-input-form-text form-control" placeholder="input"></textarea>
-          <button type="submit" class="btn question-page-answer-done">Write</button>
-        </form>
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for f in form.visible_fields %}
+        <div class="login-form-group">
+          <label for="{{ f.name }}">{{ f.label }}</label>
+          {{ f }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-default login-btn">Send</button>
+      </form>
       </div>
     </div>
   </div>

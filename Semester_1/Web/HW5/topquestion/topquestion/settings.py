@@ -25,7 +25,7 @@ SECRET_KEY = '_2ii5q^w*#y5ahkah$ettz2klytto*&0$g5cp0zw+zx-3to-+^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'127.0.0.1', u'topquestion.com']
+ALLOWED_HOSTS = ['topquestion.com']
 
 
 # Application definition
@@ -69,7 +69,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'topquestion.wsgi.application'
-
+LOGIN_URL = '/login/'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

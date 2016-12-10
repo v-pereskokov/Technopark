@@ -92,20 +92,18 @@ a:visited {
 }
 
 .header-menu-nav-search {
+	max-width: 190px;
 	margin-top: -50px;
 	margin-left: 260px;
 }
 
-.header-user {
-	margin-top: -80px;
-	margin-left: 1000px;
+.top {
 }
 
 .header-user-avatar {
 	width: 60px;
 	height: 60px;
-	margin-top: 15px;
-	margin-left: -30px;
+	margin-left: 100px;
 }
 
 .header-user-info {
@@ -136,12 +134,13 @@ a:visited {
 }
 
 .header-menu-nav-register-btns {
-	margin-top: -48px;
-	margin-left: 920px;
+	margin-top: -50px;
+	margin-left: 470px;
+	font-size: 20pt;
 }
 
 .header-menu-nav-register-btn-login {
-	padding-left: 10px;
+	
 }
 
 .header-menu-nav-register-btn-signup {
@@ -250,6 +249,8 @@ a:visited {
 	color: white;
 }
 
+
+
 .form-new-question {
 	font: 18pt 'Cormorant Garamond';
 	width: 60%;
@@ -333,7 +334,7 @@ a:visited {
 
 .question-page-tags-title {
 	font: 18pt 'Cormorant Garamond';
-	margin-top: 0px;
+	margin-top: 10px;
 	margin-left: -310px;
 }
 
@@ -435,7 +436,7 @@ a:visited {
 }
 
 .login-form-group {
-	width: 250px;
+	width: 1000px;
 	color: white;
 	margin-left: 5%;
 	font: 16pt 'Indie Flower';
@@ -520,5 +521,16 @@ a:visited {
 
 .border {
 	border: 1px solid black;
+}
+
+.button-change {
+	font-size: 14pt;
+	color: white;
+	margin-left: 600px;
+}
+
+.form-error-text {
+	font: 40pt 'Indie Flower';
+	color: #000;
 }
 

@@ -9,14 +9,15 @@
 			<p>New question:</p>
 		</div>
 		<div class="form-new-question">
-			<form>
-				<p>title: 
-				<input type="text" class="form-new-question-edit-text" placeholder="title"></input></p>
-				<p>text: 
-					<textarea class="form-new-question-textarea form-control" placeholder="text"></textarea></p>
-				<p>tags: 
-					<input type="text" class="form-new-question-edit-text" placeholder="tags"></input></p>
-				<p><button type="submit" class="btn form-new-question-btn">Send</button></p>
+			<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% for f in form.visible_fields %}
+				<div class="login-form-group">
+					<label for="{{ f.name }}">{{ f.label }}</label>
+					{{ f }}
+				</div>
+				{% endfor %}
+				<button type="submit" class="btn btn-default login-btn">Send</button>
 			</form>
 		</div>
 	</div>
