@@ -45,7 +45,7 @@ class AVL_Tree {
     delete _root;
   }
   
-  height_type get_height() const {
+  constexpr height_type get_height() const {
     return get_height(_root);
   }
   
@@ -66,11 +66,11 @@ class AVL_Tree {
   }
   
   private methods:
-  height_type get_height(const node_ptr node) const {
+  constexpr height_type get_height(const node_ptr node) const {
     return node ? node->_height : 0;
   }
   
-  height_type height_different(const node_ptr node) {
+  constexpr height_type height_different(const node_ptr node) const {
     return get_height(node->_right) - get_height(node->_left);
   }
   
@@ -100,17 +100,27 @@ class AVL_Tree {
     return node;
   }
   
+  node_ptr big_right_rotate(node_ptr &node) {
+    node->_right = right_rotate(node->_right);
+    return left_rotate(node);
+  }
+  
+  node_ptr big_left_rotate(node_ptr &node) {
+    node->_left = left_rotate(node->_left);
+    return right_rotate(node);
+  }
+  
   node_ptr balance(node_ptr &node) {
     correct_height(node);
     if (height_different(node) == 2) {
       if (height_different(node->_right) < 0) {
-        node->_right = right_rotate(node->_right);
+        return big_right_rotate(node);
       }
       return left_rotate(node);
     }
     if (height_different(node) == -2) {
       if (height_different(node->_left) > 0) {
-        node->_left = left_rotate(node->_left);
+        return big_left_rotate(node);
       }
       return right_rotate(node);
     }
@@ -127,7 +137,8 @@ class AVL_Tree {
     } else {
       node->_right = add(node->_right, key);
     }
-    return balance(node);
+    node = balance(node);
+    return node;
   }
   
   node_ptr find_min(const node_ptr node) {
@@ -139,7 +150,8 @@ class AVL_Tree {
       return node->_right;
     }
     node->_left = remove_min(node->_left);
-    return balance(node);
+    node = balance(node);
+    return node;
   }
   
   node_ptr remove(node_ptr &node, const key_type &key) {
@@ -158,9 +170,9 @@ class AVL_Tree {
         node = left;
         return node;
       }
-      node_ptr min = find_min(left);
-      min->_left = remove_min(left);
-      min->_right = right;
+      node_ptr min = find_min(right);
+      min->_right = remove_min(right);
+      min->_left = left;
       node = balance(min);
       return node;
     }
@@ -168,8 +180,8 @@ class AVL_Tree {
     return node;
   }
   
-  void visitInt(const node_ptr &node) {
-    printf("%d ", node->_key);
+  void visit(const node_ptr &node) {
+    std::cout << node->_key << " ";
   }
   
   void traversLevelOrder(const node_ptr node) {
@@ -179,7 +191,7 @@ class AVL_Tree {
     }
     for (queue.push(node); !queue.empty(); queue.pop()) {
       node_ptr tmp = queue.front();
-      visitInt(tmp);
+      visit(tmp);
       if (tmp->_left) {
         queue.push(tmp->_left);
       }
@@ -223,6 +235,6 @@ int main() {
     }
     std::cout << tree.kth_element(index) << std::endl;
   }
-  tree.traversLevelOrder();
+//  tree.traversLevelOrder();
   return 0;
 }
