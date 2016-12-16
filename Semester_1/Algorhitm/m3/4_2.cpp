@@ -65,6 +65,10 @@ class AVL_Tree {
     return kth_element(_root, index);
   }
   
+  void print_map() {
+    print_map(_root);
+  }
+  
   private methods:
   constexpr height_type get_height(const node_ptr node) const {
     return node ? node->_height : 0;
@@ -154,6 +158,13 @@ class AVL_Tree {
     return node;
   }
   
+  void print_map(node_ptr node) {
+    for (auto i = traversLevelOrder(node); i > 0; --i) {
+      std::cout << "i: " << i - 1 << " el: " << kth_element(i - 1) << " " << std::endl;
+    }
+    std::cout << std::endl;
+  }
+  
   node_ptr remove(node_ptr &node, const key_type &key) {
     if (!node) {
       return nullptr;
@@ -181,17 +192,19 @@ class AVL_Tree {
   }
   
   void visit(const node_ptr &node) {
-    std::cout << node->_key << " ";
+//    std::cout << node->_key << " ";
   }
   
-  void traversLevelOrder(const node_ptr node) {
-    std::queue<node_ptr> queue;
+  size_t traversLevelOrder(const node_ptr node) {
     if (!node) {
-      return;
+      return 0;
     }
+    std::queue<node_ptr> queue;
+    size_t count = 0;
     for (queue.push(node); !queue.empty(); queue.pop()) {
       node_ptr tmp = queue.front();
       visit(tmp);
+      ++count;
       if (tmp->_left) {
         queue.push(tmp->_left);
       }
@@ -199,11 +212,13 @@ class AVL_Tree {
         queue.push(tmp->_right);
       }
     }
+    std::cout << std::endl;
+    return count;
   }
   
   key_type kth_element(node_ptr node, index_type index) {
     while (node) {
-      height_type left_height = node->_left ? node->_left->_height : 0;
+      height_type left_height = traversLevelOrder(node->_left);
       if (left_height == index) {
         return node->_key;
       }
@@ -236,5 +251,7 @@ int main() {
     std::cout << tree.kth_element(index) << std::endl;
   }
 //  tree.traversLevelOrder();
+  std::cout << std::endl;
+  tree.print_map();
   return 0;
 }
