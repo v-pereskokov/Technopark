@@ -1,10 +1,12 @@
-#include <cstdio>
+#include <iostream>
 #include <vector>
 #include <queue>
 #include <cmath>
 
 #define methods
 #define params
+
+using data_t = int;
 
 template <class T>
 class BinaryTree;
@@ -169,8 +171,8 @@ class Treap {
     }
   }
   
-  void split(const nodePtr current, const keyType key, nodePtr *left, nodePtr *right) {
-    if (!current) {
+  void split(nodePtr current, const keyType key, nodePtr *left, nodePtr *right) {
+    if (current == nullptr) {
       *left = nullptr;
       *right = nullptr;
     } else if (current->_key <= key) {
@@ -191,20 +193,20 @@ class Treap {
   }
   
   private params:
-  nodePtr _root;
+  nodePtr _root{nullptr};
 };
 
 int main() {
-  BinaryTree<int> Binary;
-  Treap<int, int> Treap;
+  BinaryTree<data_t> Binary;
+  Treap<data_t, data_t> Treap;
   size_t n;
-  scanf("%ld", &n);
+  std::cin >> n;
   for (size_t i = 0; i < n; ++i) {
-    int key, priority;
-    scanf("%d %d", &key, &priority);
+    data_t key, priority;
+    std::cin >> key >> priority;
     Binary.add(key);
     Treap.add(key, priority);
   }
-  printf("%d\n", std::abs(Binary.maxDepth() - Treap.maxDepth()));
+  std::cout << std::abs(Treap.maxDepth() - Binary.maxDepth()) << std::endl;
   return 0;
 }

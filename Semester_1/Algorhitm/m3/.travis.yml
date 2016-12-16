@@ -1,0 +1,13 @@
+language: cpp
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install install libcurl4-gnutls-dev libexpat1-dev gettext wget valgrind g++-5 git
+
+compiler:
+  - g++
+
+script:
+  - g++ -std=c++14 -Wall -o2 -o test 4_2.cpp
+  - ./test
+  
