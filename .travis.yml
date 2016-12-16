@@ -10,6 +10,6 @@ compiler:
 script:
   - cd Semester_1/Algorhitm/m3/
   - g++ -std=c++14 -Wall -o2 -o test 4_2.cpp
-  - ./test
+  - ./test | echo 5 40 0 10 1 4 1 -10 0 50 2
+  - valgrind --leak-check=yes test
 
-  
