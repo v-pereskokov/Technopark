@@ -2,7 +2,7 @@ language: cpp
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext wget valgrind g++-5 git
+  - sudo apt-get install wget valgrind g++-5 git
 
 compiler:
   - g++
