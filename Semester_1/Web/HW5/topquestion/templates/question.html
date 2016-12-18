@@ -26,12 +26,12 @@
       <div class="question-page-tags-title">
         <span>Tags: </span>
         <div class="question-page-tags">
-          {% for tag in question.tag.all %}
+          {% for tag in question.tags.all %}
             <a href="/tag/{{ tag }}">{{ tag }}</a>
            {% endfor %}
         </div>
       </div>
-      <hr class="question-page-hr">
+      <hr class="question-page-hr free-class">
       {% for answer in answers %}
       <div class="question-page-answers border">
         <div class="answer">
@@ -59,7 +59,6 @@
         {% csrf_token %}
         {% for f in form.visible_fields %}
         <div class="login-form-group">
-          <label for="{{ f.name }}">{{ f.label }}</label>
           {{ f }}
         </div>
         {% endfor %}

@@ -11,12 +11,12 @@ from django import forms
 class LoginForm(forms.Form):
     login = forms.CharField(
         label='Login',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Username here', }),
+        widget=forms.TextInput(attrs={'class': 'login-form-control', 'placeholder': 'Enter your Username here', }),
         max_length=30
     )
     password = forms.CharField(
         label='Password',
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '*******', }),
+        widget=forms.PasswordInput(attrs={'class': 'login-form-control', 'placeholder': '*******', }),
         min_length=8
     )
 
@@ -36,22 +36,22 @@ class LoginForm(forms.Form):
 class SignupForm(forms.Form):
     username = forms.CharField(
         label='Login',
-        widget=forms.TextInput(attrs={ 'class': 'form-control', 'placeholder': 'Enter your Username here', }),
+        widget=forms.TextInput(attrs={ 'class': 'login-form-control', 'placeholder': 'Enter your Username here', }),
         max_length=30
     )
     email = forms.EmailField(
         label='Email',
-        widget=forms.EmailInput(attrs={ 'class': 'form-control', 'placeholder': 'example@mail.ru', }),
+        widget=forms.EmailInput(attrs={ 'class': 'login-form-control', 'placeholder': 'example@mail.ru', }),
         max_length=100
     )
     password = forms.CharField(
         label='Password',
-        widget=forms.PasswordInput(attrs={ 'class': 'form-control', 'placeholder': '********' }),
+        widget=forms.PasswordInput(attrs={ 'class': 'login-form-control', 'placeholder': '********' }),
         min_length=8
     )
     password_repeat = forms.CharField(
         label='Repeat Password',
-        widget=forms.PasswordInput(attrs={ 'class': 'form-control', 'placeholder': '********' }),
+        widget=forms.PasswordInput(attrs={ 'class': 'login-form-control', 'placeholder': '********' }),
         min_length=8
     )
     avatar = forms.FileField(
@@ -122,23 +122,17 @@ class SignupForm(forms.Form):
 class QuestionForm(forms.Form):
     title = forms.CharField(
         label='Title',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter question title here', }),
+        widget=forms.TextInput(attrs={'class': 'login-form-control', 'placeholder': 'Enter question title here', }),
         max_length=100
     )
     text = forms.CharField(
         label='Text',
-        widget=forms.Textarea(attrs={'class': 'form-control noresize', 'rows': '14', 'placeholder': 'Enter your question here',}),
+        widget=forms.Textarea(attrs={'class': 'login-form-control noresize', 'rows': '14', 'placeholder': 'Enter your question here',}),
         max_length=100000
-    )
-    category = forms.CharField(
-        label='Category',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter question categoty', }),
-        max_length=50,
-        required=False
     )
     tags = forms.CharField(
         label='Tags',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tag1,Tag2,Tag3'}),
+        widget=forms.TextInput(attrs={'class': 'login-form-control', 'placeholder': 'Tag1,Tag2,Tag3'}),
         required=False
     )
 
@@ -181,13 +175,6 @@ class QuestionForm(forms.Form):
             if tag_text is not None and tag_text != '':
                 tag = Tag.objects.get_or_create(text=tag_text)
                 q.tags.add(tag[0])
-
-        category_text = data.get('category')
-        if category_text is not None and category_text != '':
-            category = Category.objects.get_or_create(title=category_text)
-        else:
-            category = Category.objects.get_or_create(title='General')
-        q.category = category[0]
         q.save()
         return q
 
@@ -195,7 +182,7 @@ class QuestionForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control question-page-input-form-text', 'rows': '5', 'placeholder': 'Enter your answer here', })
+        widget=forms.Textarea(attrs={'class': 'login-form-control question-page-input-form-text noresize', 'rows': '5', 'placeholder': 'Enter your answer here', })
     )
 
     def save(self, question, user):

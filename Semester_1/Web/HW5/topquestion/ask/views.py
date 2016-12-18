@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 import json
 from ask.models import *
 from ask.forms import *
-from ask.helper import pagination, randomTags
+from ask.helper import *
 
 
 def index(request, page='1'):
@@ -34,9 +34,8 @@ def question(request, id):
 		form = AnswerForm(request.POST)
 
 		if form.is_valid():
-			answer = form.save(question, request.user)
-			return HttpResponseRedirect(reverse('question', kwargs={'id': question.id, 'page' : last_page_num})
-										+ '#answer_' + str(answer.id))
+			answer = form.save(question_, request.user)
+			return HttpResponseRedirect(reverse('question', kwargs={'id': question_.id}))
 	else:
 		form = AnswerForm()
 	return render(request, 'question.html',
@@ -50,7 +49,7 @@ def questions_tag(request, tag, page='1'):
 	return render(request, 'questions_tag.html', {'tag': tag, 'questions': questions, 'tags': randomTags(Tag),
 																									 'questions_page_title': 'Tag: ' + tag})
 
-@login_required
+
 def login(request):
 	redirect = request.GET.get('continue', '/')
 	if request.user.is_authenticated():
@@ -134,3 +133,16 @@ def user_settings(request, user_name):
 		form = QuestionForm(q)
 	return render(request, 'user_settings.html',
 														{'user': user, 'profile': profile[0], 'tags': randomTags(Tag), 'form': form})
+
+
+@login_required_ajax
+@require_POST
+def question_like(request):
+	pass
+
+
+@login_required_ajax
+@require_POST
+def answer_like(request):
+	pass
+

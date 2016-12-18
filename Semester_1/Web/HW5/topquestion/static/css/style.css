@@ -97,6 +97,10 @@ a:visited {
 	margin-left: 260px;
 }
 
+.login-user {
+	margin-top: -10px;
+}
+
 .top {
 }
 
@@ -134,8 +138,8 @@ a:visited {
 }
 
 .header-menu-nav-register-btns {
-	margin-top: -50px;
-	margin-left: 470px;
+	margin-top: -60px;
+	margin-left: 430px;
 	font-size: 20pt;
 }
 
@@ -201,7 +205,7 @@ a:visited {
 .questions-question-like-count {
 	font: 16pt 'Cormorant Garamond';
 	margin-top: -30px;
-	padding-left: 50px;
+	padding-left: 40px;
 }
 
 .questions-question-title {
@@ -404,13 +408,15 @@ a:visited {
 
 .question-page-input-form {
 	margin-top: 20px;
+	margin-left: -222px;
 }
 
 .question-page-input-form-text {
 	width: 595px;
 	height: 300px;
 	font: 14pt 'Cormorant Garamond';
-	margin-left: 7.5%;
+	margin-left: 0px;
+	color: black;
 }
 
 .question-page-answer-ok-correct {
@@ -424,7 +430,7 @@ a:visited {
 }
 
 .question-pagination {
-  margin-top: 170px;
+  	margin-top: 170px;
 }
 
 .login {
@@ -436,15 +442,19 @@ a:visited {
 }
 
 .login-form-group {
-	width: 1000px;
-	color: white;
-	margin-left: 5%;
+	width: 600px;
+	margin-left: 270px;
 	font: 16pt 'Indie Flower';
+	color: black;
+}
+
+.free-class {
+	margin-top: 15px;
 }
 
 .login-btn {
 	margin-top: 2%;
-	margin-left: 5%;
+	margin-left: 230px;
 	font: 16pt 'Indie Flower';
 }
 

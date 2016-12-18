@@ -36,11 +36,11 @@
 						              <img src="/{{ request.user.profile.avatar.url }}" class="img-circle header-user-avatar">
 						              <div class="header-user-info">
 										  <p class="header-user-info-p"><a href="{% url 'user' request.user %}" class="header-user-info-p-a">settings</a></p>
-										  <p class="header-user-info-p"><a href="{% url 'logout' %}?continue={{ request.path }}" class="header-user-info-p-a">logout</a></p>
+										  <p class="header-user-info-p"><a href="{% url 'mylogout' %}?continue={{ request.path }}" class="header-user-info-p-a">logout</a></p>
 									   </div>
 					            {% else %}
 					            	<div class="header-menu-nav-register-btn-login">
-					            		<a href="{% url 'login' %}?continue={{ request.path }}">LogIn</a>
+					            		<a href="{% url 'mylogin' %}?continue={{ request.path }}">LogIn</a>
 					            		<a href="{% url 'signup' %}">SignUp</a>
 					            	</div>
 					            {% endif %} 
