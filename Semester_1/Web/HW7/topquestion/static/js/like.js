@@ -1,3 +1,14 @@
+  $('#search-btn').click( function() {
+  q = $('#search-text').val();
+  $('#results').html('&nbsp;').load('{% url search %}?q=' + q );
+  });
+   
+  $(document).ajaxStart(function() {
+  $('#spinner').show();
+  }).ajaxStop( function() {
+  $('#spinner').hide();
+  });
+
   $('.likebutton').click(function () {    
     $.ajax({
         url: "{% url 'question_like' %}",

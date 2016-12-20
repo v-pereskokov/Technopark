@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.core.urlresolvers import reverse
 from django.forms.models import model_to_dict
+from django.template.context import RequestContext
 from django.contrib.auth.models import User
 import json
 from ask.models import *
@@ -192,3 +193,13 @@ def answer_like(request):
 		return HttpResponse(json.dumps(response), content_type='application/json')
 
 
+def ajax_user_search(request):
+    if request.is_ajax():
+        text = request.GET.get('search-text')
+        if text is not None:            
+            results = User.objects.filter(
+                Q(first_name__contains = text) |
+                Q(last_name__contains = text) |
+                Q(username__contains = text)).order_by('-title')
+            return render_to_response('base.html', {'results': results,}, 
+                                       context_instance = RequestContext(request))

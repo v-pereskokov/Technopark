@@ -21,4 +21,5 @@ urlpatterns = [
   url(r'^like/question/$', views.question_like, name='question_like'),
   url(r'^like/answer/$', views.answer_like, name='answer_like'),
   url(r'^answer/check/$', views.answer_check, name='answer_check'),
+  url(r'^search/', views.ajax_user_search, name='search'),
 ]
