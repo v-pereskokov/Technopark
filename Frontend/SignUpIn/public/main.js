@@ -1,5 +1,5 @@
-import signin from 'pages/signin/signin';
-import signup from 'pages/signup/signup';
+import Signin from './pages/signin/signin';
+import Signup from './pages/signup/signup';
 
 class Main {
   constructor() {
@@ -10,9 +10,9 @@ class Main {
   _getPageContent() {
     switch (this._pageIndex) {
       case 0:
-        return signin.apply(this);
+        return Signin.apply(this);
       case 1:
-        return signup.apply(this);
+        return Signup.apply(this);
       default:
         return 'хай';
     }

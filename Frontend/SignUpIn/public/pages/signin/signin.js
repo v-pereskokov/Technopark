@@ -30,7 +30,7 @@ const form = new Form({
   },
 });
 
-function signin() {
+function Signin() {
   const formSignin = document.createElement('div');
   formSignin.appendChild(form.el);
 
@@ -55,4 +55,4 @@ function signin() {
   return formSignin;
 }
 
-export default signin;
+export default Signin;

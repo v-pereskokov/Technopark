@@ -1,6 +1,5 @@
 import Button from '../button/button';
-import plural from "../../plural";
-import index from '../../main';
+import plural from '../../plural';
 import { jsonRequest } from '../../libs/requests';
 
 export default class Form {
@@ -29,7 +28,7 @@ export default class Form {
     const formData = this._getFormData();
 
     if (formData.password1 !== undefined && formData.password1 !== formData.password2
-                                            && formData.password1 !== '' && formData.password2 !== '') {
+      && formData.password1 !== '' && formData.password2 !== '') {
       this.el.querySelector('.ui-error').innerHTML = 'Пароли не совпадают';
       this.el.querySelector('.ui-error').style.display = 'block';
       return false;
@@ -100,7 +99,7 @@ export default class Form {
           window.welcome.innerHTML = `<span>Привет, ${name}. Ты зашел ${count} ${plural(count,
             ['раз', 'раза', 'раз'], 'rus')}</span>`;
         } else {
-          index.updatePage(0);
+          window.updatePage(0);
         }
       }
     });
