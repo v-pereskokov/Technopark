@@ -37,7 +37,7 @@ function signin() {
   const temp1 = document.createElement('div');
   temp1.innerHTML = `
   <div class="link-signup z-depth-1">
-    <span>New to Outlive? <a class="link1">Create an account.</a></span>
+    <span><a class="link1">Create an account.</a></span>
   </div>
  `;
   temp1.querySelector('.link1').addEventListener('click', () => { this.updatePage(1); });
@@ -46,7 +46,7 @@ function signin() {
   const temp2 = document.createElement('div');
   temp2.innerHTML = `
   <div class="link-signup z-depth-1">
-    <span><a class="link2">Go game</a></span>
+    <span><a class="link2">Go</a></span>
   </div>
  `;
   temp2.querySelector('.link2').addEventListener('click', () => { this.updatePage(2); });
